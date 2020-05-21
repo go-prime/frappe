@@ -55,12 +55,12 @@ def get_data(module, build=True):
 		exists_cache = get_table_with_counts()
 		def doctype_contains_a_record(name):
 			exists = exists_cache.get(name)
-			if not type(exists) == int:
-				if not frappe.db.get_value('DocType', name, 'issingle'):
-					exists = frappe.db.count(name)
-				else:
-					exists = True
-				exists_cache[name] = exists
+			#if not type(exists) == int:
+			if not frappe.db.get_value('DocType', name, 'issingle'):
+				exists = frappe.db.count(name)
+			else:
+				exists = True
+			exists_cache[name] = exists
 			return exists
 
 		for section in data:
