@@ -72,6 +72,7 @@ def search_widget(doctype, txt, query=None, searchfield=None, start=0,
 
 	standard_queries = frappe.get_hooks().standard_queries or {}
 
+
 	if query and query.split()[0].lower()!="select":
 		# by method
 		frappe.response["values"] = frappe.call(query, doctype, txt,

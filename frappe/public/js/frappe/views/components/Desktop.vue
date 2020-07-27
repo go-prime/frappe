@@ -1,15 +1,10 @@
 <template>
 	<div class="modules-page-container" v-if="home_settings_fetched">
-		<a
-			class="btn-show-hide text-muted text-medium"
-			@click="show_hide_cards_dialog"
-		>
-			{{ __('Show / Hide Cards') }}
-		</a>
 		<div
 			class="modules-section"
 			v-for="(category, i) in module_categories" :key="category"
 		>
+		
 			<desk-section
 				v-if="get_modules_for_category(category).length"
 				:category="category"
@@ -23,6 +18,7 @@
 </template>
 
 <script>
+import DeskModuleBox from "./DeskModuleBox.vue";
 import DeskSection from './DeskSection.vue';
 import { generate_route } from './utils';
 
@@ -215,14 +211,13 @@ export default {
 <style lang="less" scoped>
 .modules-page-container {
 	position: relative;
-	margin-top: 40px;
+	margin-top: 70px;
 	margin-bottom: 30px;
 	padding-top: 1px;
 }
 
 .modules-section {
 	position: relative;
-	margin-top: 30px;
 }
 
 .btn-show-hide {
