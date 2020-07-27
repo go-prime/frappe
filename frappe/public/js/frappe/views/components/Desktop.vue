@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import DeskModuleBox from "./DeskModuleBox.vue";
 import DeskSection from './DeskSection.vue';
 import { generate_route } from './utils';
 

@@ -213,7 +213,6 @@ export default {
 }
 
 
-
 .module-box-link {
   flex: 1;
   padding-top: 5px;
