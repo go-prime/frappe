@@ -39,6 +39,11 @@ body[data-route="desk"] .main-menu {
 body[data-route^="List"] .main-menu {
 	.list-sidebar {
 		display: block !important;
+		padding: 1rem;
+		background-color:white;
+		box-shadow: 0px 0px 8px rgba(0,0,0,0.3);
+		overflow: hidden;
+		height:fit-content;
 	}
 
 	.hide-form-sidebar;
@@ -293,7 +298,9 @@ body[data-route^="Module"] .main-menu {
 			height: 100%;
 			width: 40%;
 			display: block !important;
-			transition: transform 200ms ease-in-out;
+			transition: all 200ms ease-in-out;
+			overflow: hidden;
+			height:fit-content;
 
 			&.opened {
 				transform: translateX(0);
@@ -383,8 +390,28 @@ body[data-route^="Module"] .main-menu {
 	}
 }
 
+.sidebar-minimized {
+	height: 70px !important;
+}
+
+.sidebar-btn {
+	margin-left: 24px;
+}
 
 .list-sidebar {
+	padding: 1rem;
+	background-color:white;
+	box-shadow: 0px 0px 8px rgba(0,0,0,0.3);
+	overflow: hidden;
+	height:fit-content;
+
+
+	.page-form {
+		background-color: white;
+		border-bottom: 0px;
+		flex-direction: column;
+	}
+
 	.list-sidebar-label {
 		color: @text-muted;
 		text-transform: uppercase;

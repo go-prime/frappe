@@ -55,7 +55,7 @@ frappe.views.BaseList = class BaseList {
 		// Setup buttons
 		this.primary_action = null;
 		this.secondary_action = {
-			label: __('Refresh'),
+			label: __('<i class="fa fa-refresh"></i>'),
 			action: () => this.refresh()
 		};
 

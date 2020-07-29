@@ -6,15 +6,15 @@
 }
 
 .page-head {
-	border-bottom:1px solid @border-color;
 	height: 70px;
 	position: fixed;
 	left: 0;
 	right: 0;
-	top: 41px;
-	margin: auto;
+	top: 54px;
+	margin: 1rem;
 	background-color: #fff;
 	z-index: 101;
+	box-shadow: 0px 0px 8px rgba(0,0,0,0.3);
 }
 
 .sub-heading {
@@ -29,6 +29,7 @@
 	.page-body {
 		overflow-x: hidden;
 		min-height: calc(100vh - 40px);
+		
 	}
 }
 
@@ -96,7 +97,7 @@
 }
 
 .page-content {
-	margin-top: 70px;
+	margin-top: 120px;
 }
 
 /* show menu aligned to the right border of the dropdown */
@@ -108,8 +109,9 @@
 }
 
 .layout-main-section {
-	border: 1px solid @border-color;
-	border-top: 0px;
+	margin: 8px;
+	margin-top: 0px;
+	
 }
 
 .layout-main-section-wrapper {
@@ -117,19 +119,31 @@
 }
 
 .layout-footer {
-	border: 1px solid @border-color;
+	margin-top: 16px;
+	background-color: #eee;
 	border-top: 0px;
 	padding: 5px 15px;
 	font-size: @text-medium;
 }
 
+.layout-side-section {
+	.form-group {
+		width: 100% !important;
+	}
+}
+
+.chart-wrapper {
+	margin:8px;
+	box-shadow: 0px 0px 8px rgba(0,0,0,0.3);
+}
+
+
 .page-form {
-	margin: 0;
+	margin-bottom: 16px;
 	padding: 5px 10px;
 	display: flex;
 	flex-wrap: wrap;
-	border-bottom: 1px solid @border-color;
-	background-color: @panel-bg;
+	box-shadow: 0px 0px 8px rgba(0,0,0,0.3);
 
 	.form-group {
 		padding: 0px;

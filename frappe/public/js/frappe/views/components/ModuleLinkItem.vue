@@ -1,13 +1,13 @@
 <template>
 	<div class="link-item flush-top small"
-		:class="{'onboard-spotlight': onboard, 'disabled-link': disabled_dependent}"
+		:class="{'disabled-link': disabled_dependent}"
 		@mouseover="mouseover" @mouseleave="mouseleave"
 	>
-		<span :class="['indicator', indicator_color]"></span>
+		
 
-		<span v-if="disabled_dependent" class="link-content text-muted">{{ label || __(name) }}</span>
+		<span v-if="disabled_dependent" class="link-content">{{ label || __(name) }}</span>
 		<a v-else class="link-content" :href="route" @click.prevent="handle_click">
-			{{ label || __(name) }}
+			{{ label || __(name) }} <span v-if="count" class="badge badge-default">{{ count }}</span>
 		</a>
 		<div v-if="disabled_dependent" v-show="popover_active"
 			@mouseover="popover_hover = true" @mouseleave="popover_hover = false"
@@ -38,14 +38,14 @@ export default {
 			return this.dependencies && this.incomplete_dependencies;
 		},
 
-		indicator_color() {
+		indicator_icon() {
 			if(this.open_count) {
-				return 'red';
+				return 'fa fa-exclamation';
 			}
 			if(this.onboard) {
-				return this.count ? 'blue' : 'orange';
+				return this.count ? 'fa folder-open' : 'fa file';
 			};
-			return 'grey';
+			return 'fa fa-circle text-muted';
 		},
 
 		popover_active() {
@@ -83,6 +83,10 @@ export default {
 	cursor: default;
 }
 
+.link-item span.fa {
+	margin: 2px
+}
+
 .onboard-spotlight {
 	.link-content {
 		font-weight: 600;
@@ -91,6 +95,10 @@ export default {
 
 a:hover, a:focus {
 	text-decoration: underline;
+}
+
+a {
+	color: #0f4c75 !important;
 }
 
 // Overriding indicator styles

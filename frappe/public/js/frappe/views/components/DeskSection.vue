@@ -1,8 +1,5 @@
 <template>
   <div>
-    <div class="section-header level text-muted">
-      <div class="module-category h6 uppercase">{{ __(this.category) }}</div>
-    </div>
 
     <div class="modules-container" :class="{'dragging': dragging}" ref="modules-container">
       <desk-module-box
@@ -100,10 +97,10 @@ export default {
 <style lang="less" scoped>
 .modules-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   grid-auto-rows: minmax(62px, 1fr);
-  column-gap: 15px;
-  row-gap: 15px;
+  column-gap: 8px;
+  row-gap: 8px;
   align-items: center;
 }
 </style>
