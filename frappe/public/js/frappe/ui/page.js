@@ -111,6 +111,7 @@ frappe.ui.Page = Class.extend({
 
 		this.btn_primary = this.page_actions.find(".primary-action");
 		this.btn_secondary = this.page_actions.find(".btn-secondary");
+		this.btn_secondary.addClass('goprime-btn-secondary')
 
 		this.menu = this.page_actions.find(".menu-btn-group .dropdown-menu");
 		this.menu_btn_group = this.page_actions.find(".menu-btn-group");
@@ -119,6 +120,7 @@ frappe.ui.Page = Class.extend({
 		this.actions_btn_group = this.page_actions.find(".actions-btn-group");
 
 		this.page_form = $('<div class="page-form row hide"></div>').prependTo(this.main);
+		
 		this.inner_toolbar = $('<div class="form-inner-toolbar hide"></div>').prependTo(this.main);
 		this.icon_group = this.page_actions.find(".page-icon-group");
 

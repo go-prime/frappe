@@ -36,6 +36,10 @@
 .dt-scrollable {
 	max-height: calc(100vh - 250px);
 	min-height: 100px;
+
+	.dt-cell {
+		border-left: none;
+	}
 }
 
 table td.dt-cell {
@@ -56,6 +60,15 @@ table td.dt-cell {
 	--dt-cell-bg: @panel-bg;
 	--dt-text-color: @text-muted;
 
+	.dt-row-header .dt-cell{
+		color: white !important;
+		background-color: #3282b8 !important;
+	}
+
+	.dt-row-filter .dt-cell{
+		background-color: #bbe1fa !important;
+	}
+
 	.dt-row[data-is-filter] {
 		display: flex !important;
 	}
@@ -63,6 +76,7 @@ table td.dt-cell {
 
 .dt-row {
 	height: 35px;
+
 }
 
 .dt-row.dt-row-totalRow {

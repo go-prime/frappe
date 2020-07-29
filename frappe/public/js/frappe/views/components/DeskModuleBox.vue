@@ -90,7 +90,7 @@ export default {
   background-color: #bbe1fa !important;
 }
 
-.blue .list-group-item {
+.module-box .list-group-item {
   background: transparent;
 }
 

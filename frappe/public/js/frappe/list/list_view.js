@@ -109,6 +109,30 @@ frappe.views.ListView = class ListView extends frappe.views.BaseList {
 	setup_page() {
 		this.parent.list_view = this;
 		super.setup_page();
+		setTimeout(() => {
+			console.log('timeout func')
+			if($('.layout-side-section .page-form').length){
+				$('.layout-side-section .page-form').remove()
+			}
+			$('.layout-side-section').prepend($('.page-form'))
+			
+			$('.list-sidebar').addClass('sidebar-minimized')
+			if($('.list-sidebar>h4').length){
+				console.log('removing')
+				$('.list-sidebar>h4').remove()
+			}	
+			$('.list-sidebar').prepend('<h4 class="h4"> <i class="fa fa-cog"></i> Actions <button class="btn btn-sm sidebar-btn"><i class="fa fa-plus"></i></button> </h4>')
+			$('.sidebar-btn').on('click', function(){
+				$('.list-sidebar').toggleClass('sidebar-minimized')
+				$('.sidebar-btn i').toggleClass('fa-plus')
+				$('.sidebar-btn i').toggleClass('fa-minus')
+			})
+			
+			
+			$('.page-form').prepend('<h4 class="h4"> <i class="fa fa-filter"></i> List Filters </h4>')
+			
+		}, 1500)
+		
 	}
 
 	setup_page_head() {
@@ -197,7 +221,7 @@ frappe.views.ListView = class ListView extends frappe.views.BaseList {
 
 	set_primary_action() {
 		if (this.can_create) {
-			this.page.set_primary_action(__('New'), () => {
+			this.page.set_primary_action(__('<i class="fa fa-plus"></i>'), () => {
 				if (this.settings.primary_action) {
 					this.settings.primary_action();
 				} else {

@@ -514,9 +514,7 @@ li {
   margin-left: 5px;
 }
 .web-footer {
-  padding: 60px 0px;
-  min-height: 140px;
-  border-top: 1px solid #EBEFF2;
+  display:none;
 }
 .page_content {
   padding-top: 30px;
@@ -1065,4 +1063,17 @@ li.footer-child-item {
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+.website-navbar {
+  background-color: #3282b8 !important;
+  color: white !important;
+}
+
+.website-navbar .nav-link {
+  color: white !important;
+}
+
+.website-navbar .navbar-brand {
+  color: white !important;
 }
