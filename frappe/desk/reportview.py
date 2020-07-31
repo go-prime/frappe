@@ -41,14 +41,14 @@ def get():
 		groups = [i['name'] for i in  frappe.get_list('Supplier Group', 
 				filters={'company': company}, ignore_permissions=True)]
 		if groups:
-			args['filters'].append(['Supplier','supplier_group', 'in'] + groups)
+			args['filters'].append(['Supplier','supplier_group', 'in'] + [", ".join(groups)])
 
 	elif args['doctype'] == 'Customer':
 		groups = [i['name'] for i in  frappe.get_list('Customer Group', 
 					filters={'company': company}, ignore_permissions=True)]
 		
 		if groups:
-			args['filters'].append(['Customer', 'customer_group', 'in'] + groups)
+			args['filters'].append(['Customer', 'customer_group', 'in'] + [", ".join(groups)])
 
 	elif args['doctype'] == 'Item':
 		args['filters'].append(['Item Default','company', 'in', company])
