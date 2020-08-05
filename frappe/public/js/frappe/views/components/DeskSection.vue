@@ -23,7 +23,6 @@ export default {
 	},
 	data() {
 		return {
-			dragging: false,
 			fetched_module_links: {}
 		}
 	},
@@ -43,53 +42,14 @@ export default {
 					let modules = Array.from(modules_container.querySelectorAll('.module-box'))
 						.map(node => node.dataset.moduleName);
 
-					this.$emit('module-order-change', {
-						module_category: this.category,
-						modules
-					});
+					// this.$emit('module-order-change', {
+					// 	module_category: this.category,
+					// 	modules
+					// });
 				}
 			})
 		},
-		show_module_card_customize_dialog(module) {
-			const me = this;
-			const d = new frappe.ui.Dialog({
-				title: __('Customize Shortcuts'),
-				fields: [
-					{
-						label: __('Shortcuts'),
-						fieldname: 'links',
-						fieldtype: 'MultiSelectPills',
-						get_data: () => {
-							const module_links = me.fetched_module_links[module.module_name];
-							if (!module_links) {
-								return frappe.xcall('frappe.desk.moduleview.get_links_for_module', {
-									app: module.app,
-									module: module.module_name,
-								}).then(links => {
-									me.fetched_module_links[module.module_name] = links;
-									return links;
-								});
-							} else {
-								return module_links;
-							}
-						},
-						default: module.links.filter(l => !l.hidden).map(l => l.name)
-					}
-				],
-				primary_action_label: __('Save'),
-				primary_action: ({ links }) => {
-					frappe.call('frappe.desk.moduleview.update_links_for_module', {
-						module_name: module.module_name,
-						links: links || []
-					}).then(r => {
-						this.$emit('update-desktop-settings', r.message);
-					});
-					d.hide();
-				}
-			});
-
-			d.show();
-		},
+		
 	}
 }
 </script>

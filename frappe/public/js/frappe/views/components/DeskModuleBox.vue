@@ -8,7 +8,9 @@
     <div class="module-box-content">
       <div :class="{'module-box-tabs': true, 'links-visible': showLinks}" >
         <div class="module-box-tab icon-tab">
+        <a  :href="type === 'module' ? '#modules/' + module_name : link">
           <i :class="icon_class" style="font-size:5em;"></i>
+        </a>
         </div>
         <div class="module-box-tab link-tab">
           <LinkTab v-if="dropdown_links && dropdown_links.length" :items="dropdown_links" />
@@ -33,6 +35,7 @@
 import LinkTab from "./LinkTabBox.vue";
 
 export default {
+  name: "DeskModuleBox",
   props: [
     "index",
     "name",
@@ -92,6 +95,10 @@ export default {
 
 .module-box .list-group-item {
   background: transparent;
+}
+
+.icon-tab i {
+  color: #0f4c75 !important;
 }
 
 .module-box {
@@ -174,6 +181,7 @@ export default {
     background-color: transparent;
     transition: background-color 0.3s linear;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .indicator.active {
@@ -185,9 +193,9 @@ export default {
   background-color: white;
 }
 
-.module-box.sortable-chosen {
-	background-color: @disabled-background;
-	border-color: @disabled-background;
+.module-box.sortable-chosen, .module-box.blue.sortable-chosen {
+	background-color: @disabled-background !important;
+	border-color: @disabled-background !important;
 }
 
 .modules-container:not(.dragging) .module-box:hover {
@@ -243,6 +251,4 @@ export default {
 .drag-handle {
   font-size: 12px;
 }
-
-
 </style>
