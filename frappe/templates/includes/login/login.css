@@ -146,6 +146,12 @@ p {
   position: relative;
 }
 
+@media(max-width: 768px){
+  .page-card {
+    margin: 10vh auto;
+  }
+}
+
 .website-navbar {
   background-color: #3282b8 !important;
   color: white !important;
