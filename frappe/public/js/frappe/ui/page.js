@@ -119,8 +119,9 @@ frappe.ui.Page = Class.extend({
 		this.actions = this.page_actions.find(".actions-btn-group .dropdown-menu");
 		this.actions_btn_group = this.page_actions.find(".actions-btn-group");
 
-		this.page_form = $('<div class="page-form row hide"></div>').prependTo(this.main);
 		
+		this.page_form = $('<div class="page-form row hide"></div>').prependTo(this.main);
+
 		this.inner_toolbar = $('<div class="form-inner-toolbar hide"></div>').prependTo(this.main);
 		this.icon_group = this.page_actions.find(".page-icon-group");
 
@@ -608,7 +609,6 @@ frappe.ui.Page = Class.extend({
 		if (!df.placeholder) {
 			df.placeholder = df.label;
 		}
-
 		var f = frappe.ui.form.make_control({
 			df: df,
 			parent: this.page_form,
