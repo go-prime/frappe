@@ -31,8 +31,13 @@ def get():
 
 	args = get_form_params()
 	company = None
-	if args['doctype'] in ['Supplier', 'Customer', 'Item']:
+
+	has_company_field = hasattr(frappe.get_doc({'doctype': args['doctype']}), 'company')
+	
+	if args['doctype'] in ['Supplier', 'Customer', 'Item'] or has_company_field:
 		company = get_company()
+
+
 
 	if not company:
 		pass
@@ -53,6 +58,8 @@ def get():
 	elif args['doctype'] == 'Item':
 		args['filters'].append(['Item Default','company', 'in', company])
 	
+	elif has_company_field:
+		args['filters'].append([args['doctype'], 'company', '=', company])
 
 	data = execute(**args)
 	
