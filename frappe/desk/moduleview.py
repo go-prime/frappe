@@ -61,6 +61,7 @@ def get_data(module, build=True):
 				else:
 					exists = True
 				exists_cache[name] = exists
+
 			return exists
 
 		for section in data:
