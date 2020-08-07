@@ -55,7 +55,7 @@ frappe.views.BaseList = class BaseList {
 		// Setup buttons
 		this.primary_action = null;
 		this.secondary_action = {
-			label: __('Refresh'),
+			label: __('<i class="fa fa-refresh"></i>'),
 			action: () => this.refresh()
 		};
 
@@ -147,6 +147,8 @@ frappe.views.BaseList = class BaseList {
 		this.page = this.parent.page;
 		this.$page = $(this.parent);
 		this.page.page_form.removeClass('row').addClass('flex');
+		
+		this.page.page_form.data('doctype', this.doctype)
 		this.setup_page_head();
 	}
 
@@ -402,7 +404,7 @@ frappe.views.BaseList = class BaseList {
 	}
 
 	after_render() {
-
+		
 	}
 
 	render() {
@@ -587,6 +589,7 @@ class FilterArea {
 	}
 
 	make_standard_filters() {
+		console.log('making standard filters')
 		let fields = [
 			{
 				fieldtype: 'Data',
@@ -641,7 +644,6 @@ class FilterArea {
 				is_filter: 1,
 			};
 		}));
-
 		fields.map(df => this.list_view.page.add_field(df));
 	}
 

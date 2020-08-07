@@ -16,11 +16,11 @@
 		</div>
 	</noscript>
 <section class='for-login'>
-	<div class="login-content page-card" style="margin-top: 30px;">
+	<div class="login-content page-card">
+		<div class='login-icon'><i class="fa fa-user fa-5x"></i></div>
 		<form class="form-signin form-login" role="form">
-			<div class="page-card-head">
-				<span class="indicator blue" data-text="{{ _('Login') }}"></span>
-			</div>
+			<h2>User Login</h2>
+			<p class='center'><span class="indicator blue" data-text="{{ _('Login') }}"></span></p>
 
 			<input type="text" id="login_email"
 				class="form-control"
@@ -34,13 +34,28 @@
 				<span toggle="#login_password" class="fa fa-fw fa-eye toggle-password text-muted"></span>
 			</div>
 
-			<button class="btn btn-sm btn-primary btn-block btn-login" type="submit">
+			<div class='page-actions'>
+				
+				{%- if not disable_signup -%}
+				<p class="text-center sign-up-message">
+					{{ _("Don't have an account?") }} <a href="#signup" style="margin-top: -2px;font-weight:bold;">Sign up</a>
+				</p>
+				{%- endif -%}
+				<p class="text-center forgot-password-message">
+					<a href="#forgot" style="font-weight:bold;">{{ _("Forgot Password?") }}</a>
+				</p>
+			</div>
+
+
+			<button class="btn btn-lg btn-primary btn-block btn-login" type="submit">
 				{{ _("Login") }}</button>
 
 			{% if ldap_settings and ldap_settings.enabled %}
-			<button class="btn btn-sm btn-default btn-block btn-login btn-ldap-login">
+			<button class="btn btn-sm btn-default  btn-login btn-ldap-login">
 				{{ _("Login with LDAP") }}</button>
 			{% endif %}
+
+			
 		</form>
 	</div>
 	<div class='form-footer'>
@@ -59,13 +74,7 @@
 			{%- endif -%}
 			</div>
 
-	{%- if not disable_signup -%}
-		<p class="text-center sign-up-message">
-			<a href="#signup" style="margin-top: -2px;">{{ _("Don't have an account? Sign up") }}</a>
-		</p>
-	{%- endif -%}
-	<p class="text-center forgot-password-message">
-		<a href="#forgot">{{ _("Forgot Password?") }}</a></p>
+	
 	</div>
 </section>
 <section class='for-signup'>

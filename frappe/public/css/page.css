@@ -3,15 +3,15 @@
   margin-top: 40px;
 }
 .page-head {
-  border-bottom: 1px solid #d1d8dd;
   height: 70px;
   position: fixed;
   left: 0;
   right: 0;
-  top: 41px;
-  margin: auto;
+  top: 54px;
+  margin: 1rem;
   background-color: #fff;
   z-index: 101;
+  box-shadow: 0px 0px 8px rgba(0,0,0,0.3);
 }
 .sub-heading {
   display: inline-block;

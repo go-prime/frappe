@@ -2,7 +2,7 @@
 @import "mixins.less";
 
 .form-grid {
-	border: 1px solid @border-color;
+	border: 1px solid #3282b8;
 	border-radius: 3px;
 }
 
@@ -11,14 +11,14 @@
 }
 
 .grid-heading-row {
-	border-bottom: 1px solid @border-color;
-	background-color: @panel-bg;
+	color: white;
+	background-color: #3282b8;
 	font-weight: bold;
 }
 
 .grid-row {
 	padding: 0px 15px;
-	border-bottom: 1px solid @border-color;
+	border-bottom: 1px solid #3282b8;
 	.transition(.2s);
 }
 
@@ -72,12 +72,12 @@
 	height: 39px;
 	padding: 10px 15px;
 	max-height: 200px;
-	border-right: 1px solid @border-color;
+	border-right: 1px solid white;
 }
 
 .editable-form .grid-static-col.bold {
 	font-weight: bold;
-	background-color: @extra-light-yellow;
+	background-color: #fcfcfc;
 }
 
 .validated-form .grid-static-col.error {
@@ -128,7 +128,7 @@
 
 		.form-control {
 			border-radius: 0px;
-			border: 0px;
+			border: 0px !important;
 			padding-top: 8px;
 			padding-bottom: 9px;
 			height: 38px;
@@ -146,7 +146,7 @@
 		.has-error .form-control {
 			z-index: 1;
 			&:focus {
-				border-color: @indicator-red;
+				border-bottom: 2px solid @indicator-red;
 			}
 		}
 
@@ -264,7 +264,7 @@
 
 .grid-footer {
 	background-color: #fff;
-	border: 1px solid @border-color;
+	border: 1px solid #3282b8;
 	border-top: 0px;
 }
 

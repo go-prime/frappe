@@ -689,15 +689,14 @@ select.form-control {
     margin-top: 7px;
   }
   .form-page .form-control {
-    border: none;
     border-bottom: 1px solid #d1d8dd;
     box-shadow: none;
     background-color: inherit;
     height: auto;
     padding: 0px;
     margin-bottom: 7px;
-    border-radius: 0px;
     text-align: left !important;
+    
   }
   .form-page .form-control:focus {
     box-shadow: none;

@@ -5,6 +5,9 @@
 			{%- set parents = parents[-3:] %}
 			{% for parent in parents %}
 				<li class="breadcrumb-item">
+					{% if parent.label != "Home" or parent.title != "Home" or parent.name != "Home" %}
+					<i class="fa fa-angle-right" style="margin-right:1rem;"></i>
+					{% endif %}
 					<a href="{{ url_prefix }}{{ parent.route | abs_url }}" itemprop="url">
 						{{ parent.title or parent.label or parent.name or "" }}
 					</a>

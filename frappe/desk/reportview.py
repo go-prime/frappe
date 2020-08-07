@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2020, Goprime
 # MIT License. See license.txt
 
 from __future__ import unicode_literals
@@ -17,11 +17,55 @@ from frappe.utils import cstr
 @frappe.whitelist()
 @frappe.read_only()
 def get():
+	def get_company():
+		perms = frappe.get_list('User Permission', filters={
+			'user': frappe.session.user,
+			'allow': 'Company'
+			}, fields=['for_value'], ignore_permissions=True)
+		company = None
+		if len(perms) > 0:
+			company = perms[0]['for_value']
+
+		return company
+
+
 	args = get_form_params()
+	company = None
 
-	data = compress(execute(**args), args = args)
+	has_company_field = hasattr(frappe.get_doc({'doctype': args['doctype']}), 'company')
+	
+	if args['doctype'] in ['Supplier', 'Customer', 'Item'] or has_company_field:
+		company = get_company()
 
-	return data
+
+
+	if not company:
+		pass
+
+	elif args['doctype'] == 'Supplier':
+		groups = [i['name'] for i in  frappe.get_list('Supplier Group', 
+				filters={'company': company}, ignore_permissions=True)]
+		if groups:
+			args['filters'].append(['Supplier','supplier_group', 'in'] + [", ".join(groups)])
+
+	elif args['doctype'] == 'Customer':
+		groups = [i['name'] for i in  frappe.get_list('Customer Group', 
+					filters={'company': company}, ignore_permissions=True)]
+		
+		if groups:
+			args['filters'].append(['Customer', 'customer_group', 'in'] + [", ".join(groups)])
+
+	elif args['doctype'] == 'Item':
+		args['filters'].append(['Item Default','company', 'in', company])
+	
+	elif has_company_field:
+		args['filters'].append([args['doctype'], 'company', '=', company])
+
+	data = execute(**args)
+	
+	return compress(data, args = args)
+	
+	
 
 def execute(doctype, *args, **kwargs):
 	return DatabaseQuery(doctype).execute(*args, **kwargs)

@@ -2542,6 +2542,24 @@ output {
        -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
           transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
+
+.form-control.bold::placeholder {
+  color: #3282b8 !important;
+  font-weight: 400 !important;
+}
+
+.form-page .form-control {
+  border-radius: 0px;
+  border: 0px ;
+  border-bottom: 1px solid #8d99a6 !important;
+}
+
+.form-page textarea.form-control {
+  border-radius: 4px !important;
+  border: 1px solid #aaa !important;
+}
+
+
 .form-control:focus {
   border-color: #ced5db;
   outline: 0;
@@ -2838,9 +2856,10 @@ select[multiple].form-group-lg .form-control {
 .has-error.radio-inline label,
 .has-error.checkbox-inline label {
   color: #ff5858;
+  font-weight: 700;
 }
 .has-error .form-control {
-  border-color: #ff5858;
+  border-bottom: 2px solid  #ff5858;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
           box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
 }
@@ -3010,9 +3029,9 @@ fieldset[disabled] .btn {
   opacity: .65;
 }
 .btn-default {
-  color: inherit;
-  background-color: #f0f4f7;
-  border-color: transparent;
+  color: #3282b8;
+  border: 1px solid #3282b8;
+  background: transparent;
 }
 .btn-default:hover,
 .btn-default:focus,
@@ -3020,9 +3039,9 @@ fieldset[disabled] .btn {
 .btn-default:active,
 .btn-default.active,
 .open > .dropdown-toggle.btn-default {
-  color: inherit;
-  background-color: #cfdce5;
-  border-color: rgba(0, 0, 0, 0);
+  color: white;
+  background-color: #3282b8;
+  border: 0px;
 }
 .btn-default:active,
 .btn-default.active,
@@ -3050,10 +3069,12 @@ fieldset[disabled] .btn-default.active {
   background-color: #f0f4f7;
   border-color: transparent;
 }
+
 .btn-default .badge {
   color: #f0f4f7;
   background-color: inherit;
 }
+
 .btn-primary {
   color: #fff;
   background-color: #5e64ff;

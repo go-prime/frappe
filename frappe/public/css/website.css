@@ -1,10 +1,33 @@
 /* the element that this class is applied to, should have a max width for this to work*/
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  background-color: #fff;
 }
 a {
   cursor: pointer;
 }
+
+.breadcrumb {
+  padding-left: 16px;
+  padding-right: 0;
+background-color: white;
+box-shadow: inset 0px 0px 4px rgba(0,0,0,0.25);
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+content: "" !important;
+}
+
+.breadcrumb-item.active {
+  background-color: #3282b8;
+  color:white;
+  padding-right: 1rem;
+  margin-left: 0.5rem;
+  text-align: center;
+  border-radius: 1rem;
+}
+
+
 a,
 a:hover,
 a:active,
@@ -514,9 +537,7 @@ li {
   margin-left: 5px;
 }
 .web-footer {
-  padding: 60px 0px;
-  min-height: 140px;
-  border-top: 1px solid #EBEFF2;
+  display:none;
 }
 .page_content {
   padding-top: 30px;
@@ -1065,4 +1086,17 @@ li.footer-child-item {
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+.website-navbar {
+  background-color: #3282b8 !important;
+  color: white !important;
+}
+
+.website-navbar .nav-link {
+  color: white !important;
+}
+
+.website-navbar .navbar-brand {
+  color: white !important;
 }
