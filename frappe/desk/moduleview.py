@@ -333,7 +333,7 @@ def get_desktop_settings():
 	module_categories = ['Modules', 'Domains', 'Places', 'Administration']
 	user_modules_by_category = {}
 
-	user_saved_modules_by_category = home_settings.modules_by_category or {}
+	# user_saved_modules_by_category = home_settings.modules_by_category or {}
 	user_saved_links_by_module = home_settings.links_by_module or {}
 
 	def apply_user_saved_links(module):
@@ -349,21 +349,30 @@ def get_desktop_settings():
 
 		return module
 
-	for category in module_categories:
-		if category in user_saved_modules_by_category:
-			user_modules = user_saved_modules_by_category[category]
-			user_modules_by_category[category] = [apply_user_saved_links(modules_by_name[m]) \
-				for m in user_modules if modules_by_name.get(m)]
-		else:
-			user_modules_by_category[category] = [apply_user_saved_links(m) \
-				for m in all_modules if m.get('category') == category]
+	#filter out hidden modules and add custom user links
+	hidden = home_settings.hidden_modules or []
+	all_modules = [apply_user_saved_links(i) for i in all_modules if i.get('module_name') not in hidden]
 
-	# filter out hidden modules
-	if home_settings.hidden_modules:
-		for category in user_modules_by_category:
-			hidden_modules = home_settings.hidden_modules or []
-			modules = user_modules_by_category[category]
-			user_modules_by_category[category] = [module for module in modules if module.module_name not in hidden_modules]
+	#organize by category
+	for cat in module_categories:
+		user_modules_by_category[cat] = [i for i in all_modules if i.get('category') == cat]
+		
+
+	# for category in module_categories:
+	# 	if category in user_saved_modules_by_category:
+	# 		user_modules = user_saved_modules_by_category[category]
+	# 		user_modules_by_category[category] = [apply_user_saved_links(modules_by_name[m]) \
+	# 			for m in user_modules if modules_by_name.get(m)]
+	# 	else:
+	# 		user_modules_by_category[category] = [apply_user_saved_links(m) \
+	# 			for m in all_modules if m.get('category') == category]
+
+	# # filter out hidden modules
+	# if home_settings.hidden_modules:
+	# 	for category in user_modules_by_category:
+	# 		hidden_modules = home_settings.hidden_modules or []
+	# 		modules = user_modules_by_category[category]
+	# 		user_modules_by_category[category] = [module for module in modules if module.module_name not in hidden_modules]
 
 	return user_modules_by_category
 
