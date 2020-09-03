@@ -72,7 +72,8 @@ def search_widget(doctype, txt, query=None, searchfield=None, start=0,
 		try:
 			transits = [i['transit_warehouse'] for i in \
 							frappe.get_list('Company', 
-											fields=['transit_warehouse']) if i['transit_warehouse']]
+											fields=['transit_warehouse'],
+											ignore_permissions=True) if i['transit_warehouse']]
 			filters.append(["Warehouse", "name", "not in", transits])
 		except:
 			pass
