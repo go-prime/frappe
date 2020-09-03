@@ -61,9 +61,22 @@ def search_widget(doctype, txt, query=None, searchfield=None, start=0,
 
 	start = cint(start)
 
+	
+
 	if isinstance(filters, string_types):
 		filters = json.loads(filters)
 
+	# eliminate the transit warehouse 
+	# TODO replace with standard queries
+	if doctype == "Warehouse" and isinstance(filters, list):
+		try:
+			transits = [i['transit_warehouse'] for i in \
+							frappe.get_list('Company', 
+											fields=['transit_warehouse']) if i['transit_warehouse']]
+			filters.append(["Warehouse", "name", "not in", transits])
+		except:
+			pass
+	
 	if searchfield:
 		sanitize_searchfield(searchfield)
 
