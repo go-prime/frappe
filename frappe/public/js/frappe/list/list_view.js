@@ -393,27 +393,23 @@ frappe.views.ListView = class ListView extends frappe.views.BaseList {
 	after_render() {
 		this.list_sidebar.reload_stats();
 		// called after each render
+		const sidebarForm = $('.layout-side-section .sidebar-form')
 		
-		console.log('apres rendre!')
-		
-		const sidebarForm = $('.layout-side-section .page-form')
-		
-		//if the sidebar form exists and is not the required form
-		if(sidebarForm.length && sidebarForm.data('doctype') != this.doctype){
-			$('.layout-side-section .page-form').remove()
+		if(sidebarForm.length > 1 || (sidebarForm.length && sidebarForm.data('doctype') != this.doctype)){
+			$('.layout-side-section .sidebar-form').remove()
 		}
 
 		//if there's no sidebar form altogether
-		if(!$('.layout-side-section .page-form').length){
+		if(!$('.layout-side-section .sidebar-form').length){
 			// reload page form
-			if(!$('.page-form').length){
+			if(!$('.sidebar-form').length){
 				// create new page form if none exists
-				this.page.page_form = $('<div class="page-form hide"></div>').prependTo(this.page.sidebar)
+				this.page.page_form = $('<div class="sidebar-form hide"></div>').prependTo(this.page.sidebar)
 				this.filter_area.make_standard_filters();
 			}else{
-				$('.layout-side-section').prepend($('.page-form'))
+				$('.layout-side-section').prepend($('.sidebar-form'))
 			}
-			setTimeout($('.page-form').prepend('<h4 class="h4"> <i class="fa fa-filter"></i> List Filters </h4>'), 1000);
+			setTimeout($('.sidebar-form').prepend('<h4 class="h4"> <i class="fa fa-filter"></i> List Filters </h4>'), 1000);
 		}
 		
 		
@@ -421,7 +417,7 @@ frappe.views.ListView = class ListView extends frappe.views.BaseList {
 		if($('.list-sidebar>h4').length){
 			$('.list-sidebar>h4').remove()
 		}	
-		$('.list-sidebar').prepend('<h4 class="h4 position-relative"> <i class="fa fa-cog"></i> Actions <button class="btn btn-sm sidebar-btn"><i class="fa fa-plus"></i></button> </h4>')
+		$('.list-sidebar').prepend('<h4 class="h4 position-relative" style="display:flex;align-items: center;justify-content:space-between;"> <span><i class="fa fa-cog"></i> Actions</span> <button class="btn sidebar-btn btn-sm goprime-btn-secondary"><i class="fa fa-plus"></i></button> </h4>')
 		$('.sidebar-btn').on('click', function(){
 			$('.list-sidebar').toggleClass('sidebar-minimized')
 			$('.sidebar-btn i').toggleClass('fa-plus')

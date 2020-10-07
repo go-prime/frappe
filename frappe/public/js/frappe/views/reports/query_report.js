@@ -89,6 +89,8 @@ frappe.views.QueryReport = class QueryReport extends frappe.views.BaseList {
 	}
 
 	load() {
+		console.log('reveal!')
+		$('.page-form').removeClass('hide')
 		if (frappe.get_route().length < 2) {
 			this.toggle_nothing_to_show(true);
 			return;
@@ -111,6 +113,7 @@ frappe.views.QueryReport = class QueryReport extends frappe.views.BaseList {
 	}
 
 	load_report() {
+		
 		this.page.clear_inner_toolbar();
 		this.route = frappe.get_route();
 		this.page_name = frappe.get_route_str();
@@ -120,7 +123,6 @@ frappe.views.QueryReport = class QueryReport extends frappe.views.BaseList {
 		this.menu_items = this.get_menu_items();
 		this.datatable = null;
 		this.prepared_report_action = "New";
-
 
 		frappe.run_serially([
 			() => this.get_report_doc(),
@@ -140,6 +142,7 @@ frappe.views.QueryReport = class QueryReport extends frappe.views.BaseList {
 
 	refresh_report() {
 		this.toggle_message(true);
+
 
 		return frappe.run_serially([
 			() => this.setup_filters(),
@@ -204,7 +207,6 @@ frappe.views.QueryReport = class QueryReport extends frappe.views.BaseList {
 	setup_filters() {
 		this.clear_filters();
 		const { filters = [] } = this.report_settings;
-
 		this.filters = filters.map(df => {
 			if (df.fieldtype === 'Break') return;
 
@@ -286,6 +288,7 @@ frappe.views.QueryReport = class QueryReport extends frappe.views.BaseList {
 	}
 
 	refresh() {
+		
 		this.toggle_message(true);
 		let filters = this.get_filter_values(true);
 

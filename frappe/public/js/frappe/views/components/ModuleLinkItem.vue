@@ -7,7 +7,7 @@
 
 		<span v-if="disabled_dependent" class="link-content">{{ label || __(name) }}</span>
 		<a v-else class="link-content" :href="route" @click.prevent="handle_click">
-			{{ label || __(name) }} <span v-if="count" class="badge badge-default">{{ count }}</span>
+			{{ label || __(name) }} 
 		</a>
 		<div v-if="disabled_dependent" v-show="popover_active"
 			@mouseover="popover_hover = true" @mouseleave="popover_hover = false"
