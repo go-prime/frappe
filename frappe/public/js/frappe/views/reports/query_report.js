@@ -357,6 +357,7 @@ frappe.views.QueryReport = class QueryReport extends frappe.views.BaseList {
 				}
 
 				this.render_datatable();
+				this.setup_horizontal_scroll()
 			} else {
 				this.data = [];
 				this.toggle_nothing_to_show(true);
@@ -365,6 +366,14 @@ frappe.views.QueryReport = class QueryReport extends frappe.views.BaseList {
 			this.show_footer_message();
 			frappe.hide_progress();
 		});
+	}
+
+	setup_horizontal_scroll() {
+		$('.top-scroll').css('width', this.$report.width())
+		if(! this.$report.find('.dt-row-0').length) { return }
+		this.$top_scroll.find('.top-scroll-content').css('width', this.$report.find('.dt-row-0').width())
+		$('.top-scroll').scroll(() => $('.dt-scrollable').scrollLeft($('.top-scroll').scrollLeft()))
+		$('.dt-scrollable').scroll(() => $('.top-scroll').scrollLeft($('.dt-scrollable').scrollLeft()))
 	}
 
 	get_query_params() {
@@ -1223,6 +1232,7 @@ frappe.views.QueryReport = class QueryReport extends frappe.views.BaseList {
 		});
 
 		this.render_datatable();
+
 	}
 
 	get_linked_doctypes() {
@@ -1277,6 +1287,7 @@ frappe.views.QueryReport = class QueryReport extends frappe.views.BaseList {
 			.hide().insertAfter(page_form);
 
 		this.$chart = $('<div class="chart-wrapper">').hide().appendTo(this.page.main);
+		this.$top_scroll = $('<div class="top-scroll"><div class="top-scroll-content"></div></div>').appendTo(this.page.main);
 		this.$report = $('<div class="report-wrapper">').appendTo(this.page.main);
 		this.$message = $(this.message_div('')).hide().appendTo(this.page.main);
 	}
