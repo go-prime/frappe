@@ -198,6 +198,9 @@ frappe.ui.form.Toolbar = Class.extend({
 		}
 
 		// go to field modal
+		// Goprime 2020 disabled for J Mann.
+
+		/*
 		this.page.add_menu_item(__("Jump to field"), function() {
 			me.show_jump_to_field_dialog();
 		}, true, 'Ctrl+J');
@@ -208,6 +211,7 @@ frappe.ui.form.Toolbar = Class.extend({
 				me.show_linked_with();
 			}, true)
 		}
+		*/
 
 		// copy
 		if(in_list(frappe.boot.user.can_create, me.frm.doctype) && !me.frm.meta.allow_copy) {
