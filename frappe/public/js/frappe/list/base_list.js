@@ -146,6 +146,7 @@ frappe.views.BaseList = class BaseList {
 	setup_page() {
 		this.page = this.parent.page;
 		this.$page = $(this.parent);
+		t
 		this.page.page_form.removeClass('row').addClass('flex');
 		
 		this.page.page_form.data('doctype', this.doctype)
@@ -208,6 +209,7 @@ frappe.views.BaseList = class BaseList {
 	}
 
 	show_or_hide_sidebar() {
+		
 		let show_sidebar = JSON.parse(localStorage.show_sidebar || 'true');
 		$(document.body).toggleClass('no-list-sidebar', !show_sidebar);
 	}
@@ -367,6 +369,8 @@ frappe.views.BaseList = class BaseList {
 
 	refresh() {
 		this.freeze(true);
+		// 2020 goprime
+		$('.page-form').addClass('hide')
 		// fetch data from server
 		return frappe.call(this.get_call_args()).then(r => {
 			// render

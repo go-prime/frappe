@@ -119,7 +119,6 @@ frappe.ui.Page = Class.extend({
 		this.actions = this.page_actions.find(".actions-btn-group .dropdown-menu");
 		this.actions_btn_group = this.page_actions.find(".actions-btn-group");
 
-		
 		this.page_form = $('<div class="page-form row hide"></div>').prependTo(this.main);
 
 		this.inner_toolbar = $('<div class="form-inner-toolbar hide"></div>').prependTo(this.main);

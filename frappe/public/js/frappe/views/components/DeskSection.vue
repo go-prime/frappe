@@ -32,6 +32,11 @@ export default {
 		}
 	},
 	methods: {
+		
+		update_module_order({ module_category, modules }) {
+			console.log('sort')
+			frappe.call('frappe.desk.moduleview.update_modules_order', { module_category, modules });
+		},
 		setup_sortable() {
 			let modules_container =this.$refs['modules-container'];
 			this.sortable = new Sortable(modules_container, {
@@ -41,11 +46,11 @@ export default {
 					this.dragging = false;
 					let modules = Array.from(modules_container.querySelectorAll('.module-box'))
 						.map(node => node.dataset.moduleName);
-
-					// this.$emit('module-order-change', {
-					// 	module_category: this.category,
-					// 	modules
-					// });
+					console.log('sorting!')
+					this.update_module_order({
+						module_category: this.category,
+						modules
+					});
 				}
 			})
 		},

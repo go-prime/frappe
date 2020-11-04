@@ -7,7 +7,6 @@
 				:class="{'section-box': true, 'alternate-section-box': index % 2 == 0}"
 			>
 				<h4 class="h4"> {{ section.label }} </h4>
-				<h5>Documents in use</h5>
 				<div class="link-container">
 					<module-link-item v-for="item in withCount(section.items)"
 					:key="section.label + item.label"
@@ -18,7 +17,6 @@
 				</div>
 				
 				
-				<h5>New | Reference Documents</h5>
 				<div class="link-container">
 					<module-link-item v-for="item in withoutCount(section.items)"
 						:key="section.label + item.label"
@@ -27,7 +25,6 @@
 					>
 					</module-link-item>
 				</div>
-				<h5>Documents With Missing Dependencies</h5>
 				<div class="link-container">
 					<module-link-item v-for="item in missingDependencies(section.items)"
 						:key="section.label + item.label"

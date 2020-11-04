@@ -149,7 +149,7 @@ frappe.views.CommunicationComposer = Class.extend({
 		}
 
 		if(!this.forward && !this.recipients) {
-			this.recipients = this.frm && this.frm.timeline.get_recipient();
+			this.recipients = this.frm && this.frm.timeline && this.frm.timeline.get_recipient();
 		}
 
 		if(!this.subject && this.frm) {
