@@ -167,7 +167,7 @@ frappe.search.utils = {
 				route: route,
 			};
 		};
-		const doc_options = frappe.boot.features.module_tile_search_filtering 
+		const doc_options = frappe.boot.features.module_tile_search_filtering && frappe.session.user != "Administrator"
 			? frappe.boot.searchable_doctypes
 			: frappe.boot.user.can_read
 		doc_options.forEach(function(item) {
@@ -211,7 +211,7 @@ frappe.search.utils = {
 		var me = this;
 		var out = [];
 		var route;
-		const report_options = frappe.boot.features.module_tile_search_filtering 
+		const report_options = frappe.boot.features.module_tile_search_filtering  && frappe.session.user != "Administrator"
 			? frappe.boot.searchable_reports
 			: Object.keys(frappe.boot.user.all_reports)
 		report_options.forEach(function(item) {
@@ -243,7 +243,7 @@ frappe.search.utils = {
 			p.name = name;
 		});
 
-		const page_options = frappe.boot.features.module_tile_search_filtering 
+		const page_options = frappe.boot.features.module_tile_search_filtering  && frappe.session.user != "Administrator"
 			? frappe.boot.searchable_pages.map(name => {
 				return frappe.boot.page_info[name].title
 			})
