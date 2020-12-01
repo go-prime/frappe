@@ -167,7 +167,10 @@ frappe.search.utils = {
 				route: route,
 			};
 		};
-		frappe.boot.user.can_read.forEach(function(item) {
+		const doc_options = frappe.boot.features.module_tile_search_filtering 
+			? frappe.boot.searchable_doctypes
+			: frappe.boot.user.can_read
+		doc_options.forEach(function(item) {
 			level = me.fuzzy_search(keywords, item);
 			if (level) {
 				target = item;
@@ -208,7 +211,10 @@ frappe.search.utils = {
 		var me = this;
 		var out = [];
 		var route;
-		Object.keys(frappe.boot.user.all_reports).forEach(function(item) {
+		const report_options = frappe.boot.features.module_tile_search_filtering 
+			? frappe.boot.searchable_reports
+			: Object.keys(frappe.boot.user.all_reports)
+		report_options.forEach(function(item) {
 			var level = me.fuzzy_search(keywords, item);
 			if(level > 0) {
 				var report = frappe.boot.user.all_reports[item];
@@ -236,7 +242,14 @@ frappe.search.utils = {
 			me.pages[p.title] = p;
 			p.name = name;
 		});
-		Object.keys(this.pages).forEach(function(item) {
+
+		const page_options = frappe.boot.features.module_tile_search_filtering 
+			? frappe.boot.searchable_pages.map(name => {
+				return frappe.boot.page_info[name].title
+			})
+			: Object.keys(this.pages)
+
+		page_options.forEach(function(item) {
 			if(item == "Hub" || item == "hub") return;
 			var level = me.fuzzy_search(keywords, item);
 			if(level) {

@@ -2,6 +2,7 @@ frappe.provide('frappe.search');
 
 frappe.search.SearchDialog = Class.extend({
 	init: function(opts) {
+		console.log(frappe.boot)
 		$.extend(this, opts);
 		this.make();
 	},
