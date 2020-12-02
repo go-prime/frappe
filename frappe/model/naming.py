@@ -64,12 +64,11 @@ def set_name_from_naming_options(autoname, doc):
 	"""
 
 	_autoname = autoname.lower()
-	mappings = get_ns_mappings(doc)
 
-	if _autoname.startswith("naming_series:") or mappings:
-		set_name_by_naming_series(doc)
-	elif _autoname.startswith("field:"):
+	if _autoname.startswith("field:"):
 		doc.name = _field_autoname(autoname, doc)
+	elif _autoname.startswith("naming_series:"):
+		set_name_by_naming_series(doc)
 	elif _autoname.startswith("prompt"):
 		_prompt_autoname(autoname, doc)
 	elif _autoname.startswith("format:"):
@@ -304,45 +303,42 @@ def _format_autoname(autoname, doc):
 
 	return name
 
+
 def get_naming_series_from_mapping(doc):
 	if not frappe.db.sql('select name from `tabDocType` where name = "Naming Series Mapping"'):
 		return None
 
-	mappings = get_ns_mappings(doc)
+	mappings = frappe.db.sql('''
+		select naming_series, company, branch, user 
+		from `tabNaming Series Mapping Item` where document_type = "{}"
+		'''.format(doc.doctype))
 	
 	if not mappings:
 		return None
 
 	series = None
-	company = doc.company if hasattr(doc, 'company') else None
-	if not company: 
-		company_perms = frappe.db.sql('''
-			select for_value 
-			from `tabUser Permission` 
-			where user="{}" 
-			and allow = "Company"
-			'''.format(frappe.session.user))
-		company = company_perms[0][0] if company_perms else None
-
-	branch = doc.branch if hasattr(doc, 'branch') else None 
-			
-	if not branch:
-		branch_perms = frappe.db.sql('''
-			select for_value 
-			from `tabUser Permission` 
-			where user="{}" 
-			and allow = "Branch"
-			'''.format(frappe.session.user))
-		branch = branch_perms[0][0] if branch_perms else None
-
 	for m in mappings:
-		if m[1] != company:
+		if m[1] != doc.company:
 			continue
 
 		if m[3] and m[3] != doc.owner:
 			continue
 
 		if m[2]:
+			branch = None 
+			if hasattr(doc, 'branch'):
+				branch = doc.branch
+
+			if not branch:
+				branch_perms = frappe.db.sql('''
+					select for_value 
+					from `tabUser Permission` 
+					where user="{}" 
+					and allow = "Branch"
+					and for_value = "{}"
+					'''.format(frappe.session.user, m[2]))
+				branch = branch_perms[0][0] if branch_perms else None
+			
 			if branch == m[2]:
 				series = m[0]
 		else:
@@ -350,8 +346,4 @@ def get_naming_series_from_mapping(doc):
 
 	return series
 
-def get_ns_mappings(doc):
-	return frappe.db.sql('''
-		select naming_series, company, branch, user 
-		from `tabNaming Series Mapping Item` where document_type = "{}"
-		'''.format(doc.doctype))
+

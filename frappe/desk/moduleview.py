@@ -43,6 +43,9 @@ def get_data(module, build=True):
 	else:
 		add_custom_doctypes(data, doctype_info)
 
+	add_section(data, _("Custom Reports"), "fa fa-list-alt",
+		get_report_list(module))
+
 	data = combine_common_sections(data)
 	data = apply_permissions(data)
 
