@@ -245,7 +245,7 @@ frappe.search.utils = {
 		});
 
 		const page_options = frappe.boot.features.module_tile_search_filtering  && frappe.session.user != "Administrator"
-			? frappe.boot.searchable_pages.map(name => {
+			? frappe.boot.searchable_pages.filter(i => frappe.boot.page_info[i] != undefined).map(name => {
 				return frappe.boot.page_info[name].title
 			})
 			: Object.keys(this.pages)
