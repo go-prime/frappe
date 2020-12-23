@@ -220,7 +220,6 @@ def get_fullnames():
 def get_user(bootinfo):
 	"""get user info"""
 	bootinfo.user = frappe.get_user().load_user()
-	print(bootinfo.user)
 
 def add_home_page(bootinfo, docs):
 	"""load home page"""

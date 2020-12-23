@@ -218,6 +218,7 @@ frappe.search.utils = {
 			var level = me.fuzzy_search(keywords, item);
 			if(level > 0) {
 				var report = frappe.boot.user.all_reports[item];
+				if(!report) { return }
 				if(report.report_type == "Report Builder")
 					route = ["List", report.ref_doctype, "Report", item];
 				else
