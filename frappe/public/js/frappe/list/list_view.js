@@ -1453,7 +1453,8 @@ frappe.views.ListView = class ListView extends frappe.views.BaseList {
 		actions_menu_items.push(bulk_assignment_rule());
 
 		// bulk printing
-		if (frappe.model.can_print(doctype)) {
+		// if the doctype is print controlled disable
+		if (frappe.model.can_print(doctype) && !(frappe.boot.features && frappe.boot.features.print_controls)) {
 			actions_menu_items.push(bulk_printing());
 		}
 
