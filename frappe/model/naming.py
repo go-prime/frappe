@@ -64,7 +64,7 @@ def set_name_from_naming_options(autoname, doc):
 	"""
 
 	_autoname = autoname.lower()
-	mappings = get_ns_mappings(doc)
+	mappings = get_naming_series_from_mapping(doc)
 
 	if _autoname.startswith("naming_series:") or mappings:
 		set_name_by_naming_series(doc)
@@ -351,7 +351,10 @@ def get_naming_series_from_mapping(doc):
 	return series
 
 def get_ns_mappings(doc):
-	return frappe.db.sql('''
-		select naming_series, company, branch, user 
-		from `tabNaming Series Mapping Item` where document_type = "{}"
-		'''.format(doc.doctype))
+	try:
+		return frappe.db.sql('''
+			select naming_series, company, branch, user 
+			from `tabNaming Series Mapping Item` where document_type = "{}"
+			'''.format(doc.doctype))
+	except:
+		return None
