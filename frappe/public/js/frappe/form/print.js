@@ -59,7 +59,7 @@ frappe.ui.form.PrintPreview = Class.extend({
 			me.printit();
 		});
 
-		if(!(frappe.boot.features && frappe.boot.print_controls)) {
+		if(!(frappe.boot.features && frappe.boot.features.print_controls)) {
 			this.wrapper.find(".btn-print-preview").click(function () {
 				me.new_page_preview();
 			});
