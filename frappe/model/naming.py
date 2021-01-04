@@ -80,6 +80,7 @@ def set_name_from_naming_options(autoname, doc):
 def set_name_by_naming_series(doc):
 	"""Sets name by the `naming_series` property"""
 	ns = get_naming_series_from_mapping(doc)
+	
 	if ns:
 		doc.naming_series = ns
 	
@@ -123,11 +124,23 @@ def make_autoname(key="", doctype="", doc=""):
 
 
 def parse_naming_series(parts, doctype='', doc=''):
+	from goprime.config.utils import get_features
+	
 	n = ''
 	if isinstance(parts, string_types):
 		parts = parts.split('.')
 	series_set = False
 	today = now_datetime()
+	if hasattr(doc, 'doctype') and doc.doctype == 'Sales Invoice' and \
+			get_features().get('sync_waybills_and_invoices'):
+		pick_list = frappe.db.sql('''
+			select parent from `tabPick List Item` 
+			where sales_order = "{}"
+			'''.format(doc.items[0].sales_order))
+
+		if pick_list:
+			return pick_list[0][0].strip('W-')
+	
 	for e in parts:
 		part = ''
 		if e.startswith('#'):

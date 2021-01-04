@@ -196,6 +196,12 @@ frappe.ui.form.Toolbar = Class.extend({
 							});
 						}
 					})
+				}else {
+					me.page.add_menu_item(__("Print"), function() {
+						me.frm.print_doc();}, true);
+					me.print_icon = me.page.add_action_icon("fa fa-print", function() {
+						me.frm.print_doc();
+					});
 				}
 
 				
