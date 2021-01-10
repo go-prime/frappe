@@ -102,6 +102,7 @@ export default {
 			let modules_container =this.$refs['modules-container'];
 			if(modules_container == undefined){
 				setTimeout(this.setup_sortable, 1000)
+				return
 			}
 			
 			this.sortable = new Sortable(modules_container, {
