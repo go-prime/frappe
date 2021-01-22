@@ -136,6 +136,11 @@ def parse_naming_series(parts, doctype='', doc=''):
 	if hasattr(doc, 'doctype') and doc.doctype in ['Sales Invoice', 'Delivery Note'] and \
 			get_features().get('sync_waybills_and_invoices'):
 		attr = 'sales_order' if doc.doctype == 'Sales Invoice' else 'against_sales_order'
+		if doc.doctype == 'Sales Invoice' and doc.is_return:
+			n = "CN-.######"
+			idx = getseries(n, 6)
+			return 'CN-' + idx
+		
 		pick_list = frappe.db.sql('''
 			select parent from `tabPick List Item` 
 			where sales_order = "{}"
