@@ -143,11 +143,14 @@ def parse_naming_series(parts, doctype='', doc=''):
 		
 		pick_list = frappe.db.sql('''
 			select parent from `tabPick List Item` 
-			where sales_order = "{}"
-			'''.format(getattr(doc.items[0], attr)))
+			where sales_order = "{}" and item_code = "{}"
+			'''.format(getattr(doc.items[0], attr), doc.items[0].item_code))
 
 		if pick_list:
-			return pick_list[0][0].strip('W-')
+			base_name = pick_list[0][0].strip('W-')
+			if doc.is_return:
+				return_count = frappe.db.sql(f'select COUNT(name) from `tabDelivery Note` where name like "{base_name}-CR-%"')
+			return f"{base_name}-CR-{return_count[0][0] + 1}" if doc.is_return else base_name
 
 	
 	for e in parts:
