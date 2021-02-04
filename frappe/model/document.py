@@ -434,7 +434,10 @@ class Document(BaseDocument):
 	def set_user_and_timestamp(self):
 		self._original_modified = self.modified
 		self.modified = now()
-		self.modified_by = frappe.session.user
+		if not (self.doctype == "Sales Order" and self.owner):
+			self.modified_by = frappe.session.user
+		else:
+			self.modified_by = self.owner
 		if not self.creation:
 			self.creation = self.modified
 		if not self.owner:
