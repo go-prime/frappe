@@ -434,6 +434,8 @@ class Document(BaseDocument):
 	def set_user_and_timestamp(self):
 		self._original_modified = self.modified
 		self.modified = now()
+		
+		# Goprime 2021
 		if not (self.doctype == "Sales Order" and self.owner):
 			self.modified_by = frappe.session.user
 		else:
