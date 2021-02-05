@@ -440,9 +440,12 @@ class Document(BaseDocument):
 			self.modified_by = frappe.session.user
 		else:
 			self.modified_by = self.owner
+		
 		if self.doctype == "Pick List" and self.locations and \
 				self.locations[0].sales_order:
-			self.modified_by = frappe.db.get_value('Sales Order', self.locations[0].sales_order, 'owner')
+			owner = frappe.db.get_value('Sales Order', self.locations[0].sales_order, 'owner')
+			self.owner = owner
+			self.modified_by = owner
 
 		if not self.creation:
 			self.creation = self.modified
