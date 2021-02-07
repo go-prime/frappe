@@ -346,7 +346,7 @@ def get_naming_series_from_mapping(doc):
 			from `tabUser Permission` 
 			where user="{}" 
 			and allow = "Company"
-			'''.format(frappe.session.user))
+			'''.format(doc.owner if hasattr(doc, 'owner') else frappe.session.user))
 		company = company_perms[0][0] if company_perms else None
 
 	branch = doc.branch if hasattr(doc, 'branch') else None 
@@ -357,7 +357,7 @@ def get_naming_series_from_mapping(doc):
 			from `tabUser Permission` 
 			where user="{}" 
 			and allow = "Branch"
-			'''.format(frappe.session.user))
+			'''.format(doc.owner if hasattr(doc, 'owner') else frappe.session.user))
 		branch = branch_perms[0][0] if branch_perms else None
 
 	for m in mappings:
