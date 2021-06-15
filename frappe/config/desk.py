@@ -1,16 +1,10 @@
 from __future__ import unicode_literals
 from frappe import _
+from frappe.desk.utils import get_tiles
 
 def get_data():
-	import frappe
-	tiles = frappe.get_list("Module Tile", 
-		ignore_permissions=True, 
-		filters={'module': 'Tools'},
-		order_by="tile_index asc")
-	if tiles:
-		return [frappe.get_doc("Module Tile", tile['name']).as_module_dict() for tile in tiles]
-
-	return [
+	
+	return get_tiles('Tools', [
 		{
 			"label": _("Tools"),
 			"icon": "octicon octicon-briefcase",
@@ -72,4 +66,4 @@ def get_data():
 				},
 			]
 		}
-	]
+	])
