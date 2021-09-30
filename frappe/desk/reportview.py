@@ -13,6 +13,7 @@ from six import string_types, StringIO
 from frappe.core.doctype.access_log.access_log import make_access_log
 from frappe.utils import cstr
 
+
 @frappe.whitelist()
 @frappe.read_only()
 def get():
