@@ -106,7 +106,7 @@ To install frappe(**Make sure to install version-12**):
 Create your site first  
 You will be prompted to enter the root password  for mariadb  
 `cd erpnext`  
-`bench new site <site_name>`  
+`bench new-site <site_name>`  
 
 For each app you want to install:
 - Clone it from it's repository, specifying the branch you want cloned
