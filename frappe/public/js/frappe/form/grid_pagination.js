@@ -9,7 +9,6 @@ export default class GridPagination {
 		this.page_length = 50;
 		this.page_index = 1;
 		this.total_pages = Math.ceil(this.grid.data.length/this.page_length);
-		this.pages_to_skip = 3;
 
 		this.render_pagination();
 	}
@@ -60,7 +59,6 @@ export default class GridPagination {
 
 	check_page_number() {
 		if (this.page_index > this.total_pages && this.page_index > 1) {
-			console.log('true greater', this.page_index);
 			this.go_to_page(this.page_index-1);
 		}
 	}
@@ -112,10 +110,19 @@ export default class GridPagination {
 		}
 
 		this.update_page_numbers();
-		// if (this.page_index > this.total_pages) {
-		// 	this.total_pages++;
-		// 	this.$total_pages.text(this.total_pages);
-		// }
+	}
+
+	go_to_last_page_to_add_row() {
+		let total_pages = this.total_pages;
+		let page_length = this.page_length;
+		if (this.grid.data.length == page_length*total_pages) {
+			this.go_to_page(total_pages + 1);
+			frappe.utils.scroll_to(this.wrapper);
+		} else if (this.page_index == this.total_pages) {
+			return;
+		} else {
+			this.go_to_page(total_pages);
+		}
 	}
 
 	get_result_length() {
@@ -124,4 +131,4 @@ export default class GridPagination {
 			: this.page_index*this.page_length;
 	}
 
-} 
+}
