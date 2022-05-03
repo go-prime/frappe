@@ -20,7 +20,14 @@ max_reports_per_user = frappe.local.conf.max_reports_per_user or 3
 
 class AutoEmailReport(Document):
 	def autoname(self):
-		self.name = _(self.report)
+		count = frappe.db.sql('''
+			select ifnull(count(name), 0) from `tabAuto Email Report`
+			where name like "{}%"
+		'''.format(_(self.report)))[0][0]
+		suffix = ""
+		if count:
+			suffix = f"-{count}"
+		self.name = f"{_(self.report)}{suffix}"
 
 	def validate(self):
 		self.validate_report_count()
