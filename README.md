@@ -93,9 +93,8 @@ Follow [**this**](https://computingforgeeks.com/how-to-install-erpnext-erp-syste
     `sudo su - erpnext`  
     `cd /srv/bench`  
 
-    Clone and install bench  
-    `git clone https://github.com/frappe/bench bench-repo`  
-    `pip3 install -e bench-repo`  
+    Install bench  
+    `pip3 install frappe-bench`  
 
 ### 2. Install Frappe 
 `cd /srv/bench`  
@@ -119,7 +118,7 @@ For each app you want to install:
   `cd /srv/bench/apps/`  
   `cp -r frappe frappe_bkup`  
 - Manually clone the forked version of frappe  
-  `git clone --branch prime-erp-master --depth 1 https://github.com/tauttee/frappe.git`  
+  `git clone --branch prime-erp-master --depth 1 https://github.com/goprime/frappe.git`  
 - Copy the node_modules folder from the backup frappe  
   `cp -r frappe_bkup/node_modules frappe`  
 - Migrate your app  
