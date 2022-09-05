@@ -118,7 +118,7 @@ For each app you want to install:
   `cd /srv/bench/apps/`  
   `cp -r frappe frappe_bkup`  
 - Manually clone the forked version of frappe  
-  `git clone --branch prime-erp-master --depth 1 https://github.com/goprime/frappe.git`  
+  `git clone --branch prime-erp-master --depth 1 https://github.com/go-prime/frappe.git`  
 - Copy the node_modules folder from the backup frappe  
   `cp -r frappe_bkup/node_modules frappe`  
 - Migrate your app  
