@@ -1,5 +1,5 @@
 const hljs = require('highlight.js/lib/highlight');
-
+/*
 hljs.registerLanguage('javascript', require('highlight.js/lib/languages/javascript'));
 hljs.registerLanguage('python', require('highlight.js/lib/languages/python'));
 hljs.registerLanguage('xml', require('highlight.js/lib/languages/xml'));
@@ -14,5 +14,5 @@ hljs.registerLanguage('nginx', require('highlight.js/lib/languages/nginx'));
 hljs.registerLanguage('scss', require('highlight.js/lib/languages/scss'));
 hljs.registerLanguage('shell', require('highlight.js/lib/languages/shell'));
 hljs.registerLanguage('sql', require('highlight.js/lib/languages/sql'));
-
+*/
 module.exports = hljs;
