@@ -42,7 +42,7 @@ Follow [**this**](https://computingforgeeks.com/how-to-install-erpnext-erp-syste
     > `USE mysql;`  
     > `UPDATE user SET plugin='mysql_native_password' WHERE User='root';`  
     > `FLUSH PRIVILEGES;`  
-    > `EXIT;`  
+    > `EXIT;`
     
     Setup the mariadb configuration to work with frappe  
     `$ sudo nano /etc/mysql/mariadb.conf.d/50-server.cnf`
