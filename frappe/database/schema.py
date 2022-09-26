@@ -334,7 +334,7 @@ def get_definition(fieldtype, precision=None, length=None):
 
 	if size:
 		if fieldtype in ["Float", "Currency", "Percent"] and cint(precision) > 6:
-			size = '21,9'
+			size = '21,12'
 
 		if coltype == "varchar" and length:
 			size = length
