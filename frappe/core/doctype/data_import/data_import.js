@@ -76,9 +76,10 @@ frappe.ui.form.on('Data Import', {
 			frm.set_df_property("action", "read_only", 1);
 		}
 
-		// frm.add_custom_button(__("Help"), function() {
-		// 	frappe.help.show_video("6wiriRKPhmg");
-		// });
+
+		frm.add_custom_button(__("Help"), function() {
+			frappe.help.show_video("6wiriRKPhmg");
+		});
 
 		if (frm.doc.reference_doctype && frm.doc.docstatus === 0) {
 			frm.add_custom_button(__("Download template"), function() {

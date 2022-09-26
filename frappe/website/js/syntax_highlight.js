@@ -1,5 +1,6 @@
-const hljs = require('highlight.js/lib/core');
-/
+const hljs = require('highlight.js/lib/highlight');
+
+
 hljs.registerLanguage('javascript', require('highlight.js/lib/languages/javascript'));
 hljs.registerLanguage('python', require('highlight.js/lib/languages/python'));
 hljs.registerLanguage('xml', require('highlight.js/lib/languages/xml'));

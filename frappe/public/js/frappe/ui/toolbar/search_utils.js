@@ -211,14 +211,11 @@ frappe.search.utils = {
 		var me = this;
 		var out = [];
 		var route;
-		const report_options = frappe.boot.features.module_tile_search_filtering  && frappe.session.user != "Administrator"
-			? frappe.boot.searchable_reports
-			: Object.keys(frappe.boot.user.all_reports)
-		report_options.forEach(function(item) {
+
+		Object.keys(frappe.boot.user.all_reports).forEach(function(item) {
 			var level = me.fuzzy_search(keywords, item);
 			if(level > 0) {
 				var report = frappe.boot.user.all_reports[item];
-				if(!report) { return }
 				if(report.report_type == "Report Builder")
 					route = ["List", report.ref_doctype, "Report", item];
 				else
@@ -244,13 +241,7 @@ frappe.search.utils = {
 			p.name = name;
 		});
 
-		const page_options = frappe.boot.features.module_tile_search_filtering  && frappe.session.user != "Administrator"
-			? frappe.boot.searchable_pages.filter(i => frappe.boot.page_info[i] != undefined).map(name => {
-				return frappe.boot.page_info[name].title
-			})
-			: Object.keys(this.pages)
-
-		page_options.forEach(function(item) {
+		Object.keys(this.pages).forEach(function(item) {
 			if(item == "Hub" || item == "hub") return;
 			var level = me.fuzzy_search(keywords, item);
 			if(level) {

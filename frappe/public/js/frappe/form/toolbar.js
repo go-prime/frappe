@@ -179,32 +179,12 @@ frappe.ui.form.Toolbar = Class.extend({
 			(allow_print_for_cancelled && docstatus == 2)||
 			(allow_print_for_draft && docstatus == 0)) {
 			if(frappe.model.can_print(null, me.frm) && !issingle) {
-				if(frappe.boot.features && frappe.boot.features.print_controls) { 
-					// check if user can reprint 
-					frappe.call({
-						method: 'goprime.goprime_erp.print_controls.get_print_permissions',
-						args: {
-							doctype: me.frm.doc.doctype,
-							name: me.frm.doc.name,
-						}
-					}).then(res => {
-						if(res.message.can_print) {
-							me.page.add_menu_item(__("Print"), function() {
-								me.frm.print_doc();}, true);
-							me.print_icon = me.page.add_action_icon("fa fa-print", function() {
-								me.frm.print_doc();
-							});
-						}
-					})
-				}else {
-					me.page.add_menu_item(__("Print"), function() {
-						me.frm.print_doc();}, true);
-					me.print_icon = me.page.add_action_icon("fa fa-print", function() {
-						me.frm.print_doc();
-					});
-				}
 
-				
+				this.page.add_menu_item(__("Print"), function() {
+					me.frm.print_doc();}, true);
+				this.print_icon = this.page.add_action_icon("fa fa-print", function() {
+					me.frm.print_doc();
+				});
 			}
 		}
 

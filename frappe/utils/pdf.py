@@ -23,7 +23,7 @@ PDF_CONTENT_ERRORS = ["ContentNotFoundError", "ContentOperationNotPermittedError
 def get_pdf(html, options=None, output=None):
 	html = scrub_urls(html)
 	html, options = prepare_options(html, options)
-	print(options)
+
 	options.update({
 		"disable-javascript": "",
 		"disable-local-file-access": ""
@@ -174,11 +174,10 @@ def prepare_header_footer(soup):
 			# {"header-html": "/tmp/frappe-pdf-random.html"}
 			options[html_id] = fname
 		else:
-			if not options.get('margin-top'):
-				if html_id == "header-html":
-					options["margin-top"] = "15mm"
-				elif html_id == "footer-html":
-					options["margin-bottom"] = "15mm"
+			if html_id == "header-html":
+				options["margin-top"] = "15mm"
+			elif html_id == "footer-html":
+				options["margin-bottom"] = "15mm"
 
 	return options
 

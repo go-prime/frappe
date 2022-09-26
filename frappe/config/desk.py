@@ -1,10 +1,9 @@
 from __future__ import unicode_literals
 from frappe import _
-from frappe.desk.utils import get_tiles
+
 
 def get_data():
-	
-	return get_tiles('Tools', [
+	return [
 		{
 			"label": _("Tools"),
 			"icon": "octicon octicon-briefcase",
@@ -66,4 +65,4 @@ def get_data():
 				},
 			]
 		}
-	])
+	]

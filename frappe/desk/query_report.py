@@ -16,7 +16,6 @@ from frappe.permissions import get_role_permissions
 from six import string_types, iteritems
 from datetime import timedelta
 from frappe.utils import gzip_decompress
-import datetime
 
 def get_report_doc(report_name):
 	doc = frappe.get_doc("Report", report_name)
@@ -172,15 +171,9 @@ def run(report_name, filters=None, user=None, ignore_prepared_report=False):
 			raise_exception=True)
 
 	result = None
-	mandatory_prepared_reports = [
-		"General Ledger", "General Ledger - Simple",
-		"Trial Balance", "Trial Balance (Simple)"
-	]
 
-	if report_name in mandatory_prepared_reports or (
-    	report.prepared_report and 
-     	not report.disable_prepared_report and 
-      	not ignore_prepared_report):
+
+	if report.prepared_report and not report.disable_prepared_report and not ignore_prepared_report:
 		if filters:
 			if isinstance(filters, string_types):
 				filters = json.loads(filters)
@@ -235,13 +228,13 @@ def get_prepared_report_result(report, filters, dn="", user=None):
 		doc = frappe.get_doc("Prepared Report", dn)
 	else:
 		# Only look for completed prepared reports with given filters.
-		one_minute = datetime.datetime.now() - datetime.timedelta(seconds=60)
+
 		doc_list = frappe.get_all("Prepared Report",
 			filters={
 				"status": "Completed",
 				"filters": json.dumps(filters),
 				"owner": user,
-				"creation": [">=", one_minute],
+
 				"report_name": report.get('custom_report') or report.get('report_name')
 			},
 			order_by = 'creation desc'

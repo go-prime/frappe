@@ -130,9 +130,3 @@ For each app you want to install:
 ### 6. Troubleshooting
 - WIP
 ## Website
-
-For details and documentation, see the website
-[https://frappe.io](https://frappe.io)
-
-## License
-This repository has been released under the [MIT License](LICENSE).

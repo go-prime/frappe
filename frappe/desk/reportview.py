@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Goprime v1.1
+
 # MIT License. See license.txt
 
 from __future__ import unicode_literals
@@ -31,7 +31,11 @@ def get():
 
 	args = get_form_params()
 	company = None
-	if args['doctype'] in ['Supplier', 'Customer', 'Item']:
+
+
+	has_company_field = hasattr(frappe.get_doc({'doctype': args['doctype']}), 'company')
+	
+	if args['doctype'] in ['Supplier', 'Customer', 'Item'] or has_company_field:
 		company = get_company()
 
 	if not company:
@@ -46,12 +50,18 @@ def get():
 	elif args['doctype'] == 'Customer':
 		groups = [i['name'] for i in  frappe.get_list('Customer Group', 
 					filters={'company': company}, ignore_permissions=True)]
+
 		if groups:
 			args['filters'].append(['Customer', 'customer_group', 'in'] + [", ".join(groups)])
 
 	elif args['doctype'] == 'Item':
 		args['filters'].append(['Item Default','company', 'in', company])
 	
+
+	elif has_company_field:
+		args['filters'].append([args['doctype'], 'company', '=', company])
+
+
 	data = execute(**args)
 	
 	return compress(data, args = args)

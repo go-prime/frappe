@@ -59,26 +59,23 @@ frappe.ui.form.PrintPreview = Class.extend({
 			me.printit();
 		});
 
-		if(!(frappe.boot.features && frappe.boot.features.print_controls)) {
-			this.wrapper.find(".btn-print-preview").click(function () {
-				me.new_page_preview();
-			});
+		this.wrapper.find(".btn-print-preview").click(function () {
+			me.new_page_preview();
+		});
 
-			this.wrapper.find(".btn-download-pdf").click(function () {
-				var w = window.open(
-					frappe.urllib.get_full_url("/api/method/frappe.utils.print_format.download_pdf?"
-						+ "doctype=" + encodeURIComponent(me.frm.doc.doctype)
-						+ "&name=" + encodeURIComponent(me.frm.doc.name)
-						+ "&format=" + encodeURIComponent(me.selected_format())
-						+ "&no_letterhead=" + (me.with_letterhead() ? "0" : "1")
-						+ (me.lang_code ? ("&_lang=" + me.lang_code) : ""))
-				);
-				if (!w) {
-					frappe.msgprint(__("Please enable pop-ups")); return;
-				}
-			});
-		}
-		
+		this.wrapper.find(".btn-download-pdf").click(function () {
+			var w = window.open(
+				frappe.urllib.get_full_url("/api/method/frappe.utils.print_format.download_pdf?"
+					+ "doctype=" + encodeURIComponent(me.frm.doc.doctype)
+					+ "&name=" + encodeURIComponent(me.frm.doc.name)
+					+ "&format=" + encodeURIComponent(me.selected_format())
+					+ "&no_letterhead=" + (me.with_letterhead() ? "0" : "1")
+					+ (me.lang_code ? ("&_lang=" + me.lang_code) : ""))
+			);
+			if (!w) {
+				frappe.msgprint(__("Please enable pop-ups")); return;
+			}
+		});
 
 		this.wrapper.find(".btn-print-edit").on("click", function () {
 			let print_format = me.get_print_format();
@@ -251,19 +248,6 @@ frappe.ui.form.PrintPreview = Class.extend({
 		let print_server ;
 		var me = this;
 		frappe.call({
-			method: 'goprime.goprime_erp.print_controls.log_print',
-			args: {
-				doctype: me.frm.doc.doctype,
-				name: me.frm.doc.name
-			}
-		}).then(resp =>{
-			if(!resp.message.status == 'success') {
-				frappe.throw('Print Failure: ' + resp.message.status)
-			}else {
-				frappe.msgprint('Printed Successfully')
-			}
-		})
-		frappe.call({
 			method: "frappe.printing.doctype.print_settings.print_settings.is_print_server_enabled",
 			callback: function (data) {
 				if (data.message) {
@@ -310,7 +294,7 @@ frappe.ui.form.PrintPreview = Class.extend({
 				}
 			}
 		});
-		
+
 	},
 	new_page_preview: function (printit) {
 		var me = this;
