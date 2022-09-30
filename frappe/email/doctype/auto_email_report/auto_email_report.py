@@ -173,7 +173,7 @@ class AutoEmailReport(Document):
 
 		frappe.sendmail(
 			recipients = self.email_to.split(),
-			subject = self.name,
+			subject = self.name  + f" Report Generated on {global_date_format(now()) + ' ' + format_time(now())}",
 			message = message,
 			attachments = attachments,
 			reference_doctype = self.doctype,
