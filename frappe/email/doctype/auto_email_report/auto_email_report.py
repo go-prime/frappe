@@ -7,6 +7,7 @@ from __future__ import unicode_literals
 import calendar
 from datetime import timedelta
 import datetime
+from decimal import Decimal
 
 import frappe
 from frappe import _
@@ -171,12 +172,10 @@ class AutoEmailReport(Document):
 				'fname': self.get_file_name(),
 				'fcontent': data
 			}]
-
 		frappe.sendmail(
 			recipients = self.email_to.split(),
-			subject = self.name + \
-				f" Report Generated for {' - '.join(get_filters_timeline(self.filters)[::-1])}",
-			message = message,
+			subject = self.name,
+			message = self.explain_filters() + message,
 			attachments = attachments,
 			reference_doctype = self.doctype,
 			reference_name = self.name
@@ -184,6 +183,33 @@ class AutoEmailReport(Document):
 
 	def dynamic_date_filters_set(self):
 		return self.dynamic_date_period and self.from_date_field and self.to_date_field
+	
+	def explain_filters(self):
+		class C: filters = frappe.get_last_doc("User").as_dict()
+		slf = C()
+		if not isinstance(slf.filters, dict):
+			return ""
+		content = []
+		for k, v in slf.filters.items():
+			if v in [None, ""]:
+				continue
+			key = k.replace("_", " ").title().ljust(40)
+			if isinstance(v, (str, float, Decimal)):
+				content.append((key, v))
+			if isinstance(v, bool):
+				content.append((key, (v and "Yes") or "No"))
+			elif isinstance(v, datetime.date):
+				content.append((key, global_date_format(v)+ " " +format_time(v)))
+		explanation = f"""
+		<ul>
+		{"".join([
+			f"<li>{label}: {value}</li>"
+			for (label, value) in content
+		])}
+		</ul>
+		<br/>
+		"""
+		return explanation
 
 @frappe.whitelist()
 def download(name):
@@ -244,18 +270,4 @@ def make_links(columns, data):
 					row[col.fieldname] = get_link_to_form(row[col.options], row[col.fieldname])
 
 	return columns, data
-
-def get_filters_timeline(filters = {}):
-	output = []
-	dates = [
-		i for i in filters.values()
-		if isinstance(i, datetime.date)
-	]
-	if not dates:
-		return global_date_format(now()), ''
-	else:
-		output = global_date_format(max(dates)), \
-		global_date_format(min(dates)) if len(dates) > 1 else ''
-	return output
-
 
