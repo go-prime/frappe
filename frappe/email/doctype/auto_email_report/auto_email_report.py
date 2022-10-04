@@ -185,12 +185,10 @@ class AutoEmailReport(Document):
 		return self.dynamic_date_period and self.from_date_field and self.to_date_field
 	
 	def explain_filters(self):
-		class C: filters = frappe.get_last_doc("User").as_dict()
-		slf = C()
-		if not isinstance(slf.filters, dict):
+		if not isinstance(self.filters, dict):
 			return ""
 		content = []
-		for k, v in slf.filters.items():
+		for k, v in self.filters.items():
 			if v in [None, ""]:
 				continue
 			key = k.replace("_", " ").title().ljust(40)
