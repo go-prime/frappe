@@ -94,6 +94,7 @@ Follow [**this**](https://computingforgeeks.com/how-to-install-erpnext-erp-syste
     `cd /srv/bench`  
 
     Install bench  
+    `sudo apt-get install python3-venv`
     `pip3 install frappe-bench`  
 
 ### 2. Install Frappe 
@@ -125,7 +126,31 @@ For each app you want to install:
 - Migrate your app  
   `bench migrate`  
 - Build the js and css bundles  
-  `bench build`  
+  `bench build` 
+
+### 5. Production setup
+- Install supervisor
+  `sudo apt-get install supervisor`
+- Use the bench command to create configuration files for supervisor and nginx
+  `sudo $(whereis bench | cut -d':' -f 2) setup supervisor`
+  `sudo $(whereis bench | cut -d':' -f 2) setup nginx`
+- make links to the config files generated in supervisor and nginx's configurations
+  `sudo ln -s $(pwd)/config/supervisor.conf /etc/supervisor/conf.d/frappe-bench.conf`
+  `sudo ln -s $(pwd)/config/nginx.conf /etc/nginx/conf.d/frappe-bench.conf`
+- remove nginx's default server configuration port binding
+   `sudo nano  /etc/nginx/sites-available/default`
+    - in this file under the dafault block set the port from 80 to another unused port
+    ```
+    server {
+        listen 81 default_server; # Assuming port 81 is unused
+        listen [::]:81 default_server;
+    ```
+- restart nginx
+   `sudo service nginx restart`
+- restart supervisor
+   `sudo service supervisor restart`
+- restart supevisor services 
+   `sudo supervisorctl restart all`
 
 ### 6. Troubleshooting
 - WIP
