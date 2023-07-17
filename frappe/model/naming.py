@@ -131,30 +131,7 @@ def parse_naming_series(parts, doctype='', doc=''):
 		parts = parts.split('.')
 	series_set = False
 	today = now_datetime()
-	# Goprime 2021
-	if "goprime" in frappe.get_all_apps():
-		from goprime.config.utils import get_features
 
-		if hasattr(doc, 'doctype') and doc.doctype in ['Sales Invoice', 'Delivery Note'] and \
-				get_features().get('sync_waybills_and_invoices'):
-			attr = 'sales_order' if doc.doctype == 'Sales Invoice' else 'against_sales_order'
-			if doc.doctype == 'Sales Invoice' and doc.is_return:
-				n = "CN-.######"
-				idx = getseries(n, 6)
-				return 'CN-' + idx
-			
-			pick_list = frappe.db.sql('''
-				select parent from `tabPick List Item` 
-				where sales_order = "{}" and item_code = "{}"
-				'''.format(getattr(doc.items[0], attr), doc.items[0].item_code))
-
-			if pick_list:
-				base_name = pick_list[0][0].strip('W-')
-				if doc.is_return:
-					return_count = frappe.db.sql(f'select COUNT(name) from `tabDelivery Note` where name like "{base_name}-CR-%"')
-				return f"{base_name}-CR-{return_count[0][0] + 1}" if doc.is_return else base_name
-
-	
 	for e in parts:
 		part = ''
 		if e.startswith('#'):
