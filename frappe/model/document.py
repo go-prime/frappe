@@ -434,18 +434,6 @@ class Document(BaseDocument):
 	def set_user_and_timestamp(self):
 		self._original_modified = self.modified
 		self.modified = now()
-		
-		# Goprime 2021
-		if not (self.doctype == "Sales Order" and self.owner):
-			self.modified_by = frappe.session.user
-		else:
-			self.modified_by = self.owner
-		
-		if self.doctype == "Pick List" and self.locations and \
-				self.locations[0].sales_order:
-			owner = frappe.db.get_value('Sales Order', self.locations[0].sales_order, 'owner')
-			self.owner = owner
-			self.modified_by = owner
 
 		if not self.creation:
 			self.creation = self.modified
