@@ -897,6 +897,7 @@ frappe.ui.form.Form = class FrappeForm {
 
 		newdoc.idx = null;
 		newdoc.__run_link_triggers = false;
+		newdoc.__duplicated_from = this.doc.name;
 		if(onload) {
 			onload(newdoc);
 		}
