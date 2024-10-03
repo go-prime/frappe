@@ -104,6 +104,22 @@ def background_enqueue_run(report_name, filters=None, user=None):
 	"""run reports in background"""
 	if not user:
 		user = frappe.session.user
+
+	filters_json = json.dumps(json.loads(filters))
+
+	existing_report = frappe.db.get_value(
+		"Prepared Report",
+		{
+			"ref_report_doctype": report_name,
+			"filters": filters_json,
+			"owner": user,
+			"status": ["in", ["Queued"]]
+		}
+	)
+
+	if existing_report:
+		frappe.throw(_("You already have a report of this type queued or running. Please wait for it to complete."), frappe.DuplicateEntryError)
+
 	report = get_report_doc(report_name)
 	track_instance = \
 		frappe.get_doc({
