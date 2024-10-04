@@ -249,6 +249,9 @@ def set_naming_from_document_naming_rule(doc):
 
 def set_name_by_naming_series(doc):
 	"""Sets name by the `naming_series` property"""
+	ns = get_naming_series_from_mapping(doc)
+	if ns:
+		doc.naming_series = ns
 	if not doc.naming_series:
 		doc.naming_series = get_default_naming_series(doc.doctype)
 
@@ -257,6 +260,58 @@ def set_name_by_naming_series(doc):
 
 	doc.name = make_autoname(doc.naming_series + ".#####", "", doc)
 
+def get_naming_series_from_mapping(doc):
+	if not frappe.db.sql('select name from `tabDocType` where name = "Naming Series Mapping"'):
+		return None
+
+	mappings = get_ns_mappings(doc)
+	
+	if not mappings:
+		return None
+
+	series = None
+	company = doc.company if hasattr(doc, 'company') else None
+	if not company: 
+		company_perms = frappe.db.sql('''
+			select for_value 
+			from `tabUser Permission` 
+			where user="{}" 
+			and allow = "Company"
+			'''.format(doc.owner if hasattr(doc, 'owner') else frappe.session.user))
+		company = company_perms[0][0] if company_perms else None
+
+	branch = doc.branch if hasattr(doc, 'branch') else None 
+			
+	if not branch:
+		branch_perms = frappe.db.sql('''
+			select for_value 
+			from `tabUser Permission` 
+			where user="{}" 
+			and allow = "Branch"
+			'''.format(doc.owner if hasattr(doc, 'owner') else frappe.session.user))
+		branch = branch_perms[0][0] if branch_perms else None
+
+	for m in mappings:
+		if m[1] != company:
+			continue
+
+		if m[3] and m[3] != doc.owner:
+			continue
+
+		if m[2]:
+			if branch == m[2]:
+				series = m[0]
+		else:
+			series = m[0]
+
+	return series
+
+
+def get_ns_mappings(doc):
+	return frappe.db.sql('''
+		select naming_series, company, branch, user 
+		from `tabNaming Series Mapping Item` where document_type = "{}"
+		'''.format(doc.doctype))
 
 def make_autoname(key="", doctype="", doc="", *, ignore_validate=False):
 	"""
@@ -331,6 +386,26 @@ def parse_naming_series(
 
 	series_set = False
 	today = now_datetime()
+	if "goprime" in frappe.get_all_apps():
+		from goprime.config.utils import get_features
+		if hasattr(doc, 'doctype') and doc.doctype in ['Sales Invoice', 'Delivery Note'] and \
+				get_features().get('sync_waybills_and_invoices'):
+			attr = 'sales_order' if doc.doctype == 'Sales Invoice' else 'against_sales_order'
+			if doc.doctype == 'Sales Invoice' and doc.is_return:
+				n = "CN-.######"
+				idx = getseries(n, 6)
+				return 'CN-' + idx
+			
+			pick_list = frappe.db.sql('''
+				select parent from `tabPick List Item` 
+				where sales_order = "{}" and item_code = "{}"
+				'''.format(getattr(doc.items[0], attr), doc.items[0].item_code))
+			if pick_list:
+				base_name = pick_list[0][0].strip('W-')
+				if doc.is_return:
+					return_count = frappe.db.sql(f'select COUNT(name) from `tabDelivery Note` where name like "{base_name}-CR-%"')
+				return f"{base_name}-CR-{return_count[0][0] + 1}" if doc.is_return else base_name
+
 	for e in parts:
 		if not e:
 			continue
