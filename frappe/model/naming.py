@@ -142,17 +142,17 @@ def parse_naming_series(parts, doctype='', doc=''):
 				n = "CN-.######"
 				idx = getseries(n, 6)
 				return 'CN-' + idx
-			
-			pick_list = frappe.db.sql('''
-				select parent from `tabPick List Item` 
-				where sales_order = "{}" and item_code = "{}"
-				'''.format(getattr(doc.items[0], attr), doc.items[0].item_code))
+			if doc.items:
+				pick_list = frappe.db.sql('''
+					select parent from `tabPick List Item` 
+					where sales_order = "{}" and item_code = "{}"
+					'''.format(getattr(doc.items[0], attr), doc.items[0].item_code))
 
-			if pick_list:
-				base_name = pick_list[0][0].strip('W-')
-				if doc.is_return:
-					return_count = frappe.db.sql(f'select COUNT(name) from `tabDelivery Note` where name like "{base_name}-CR-%"')
-				return f"{base_name}-CR-{return_count[0][0] + 1}" if doc.is_return else base_name
+				if pick_list:
+					base_name = pick_list[0][0].strip('W-')
+					if doc.is_return:
+						return_count = frappe.db.sql(f'select COUNT(name) from `tabDelivery Note` where name like "{base_name}-CR-%"')
+					return f"{base_name}-CR-{return_count[0][0] + 1}" if doc.is_return else base_name
 
 	
 	for e in parts:
