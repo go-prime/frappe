@@ -89,13 +89,22 @@
 	top: var(--navbar-height);
 	background: var(--bg-color);
 	margin-bottom: 5px;
+	margin: 16px;
 	transition: 0.5s top;
+	background: white;
+    border-radius: 8px;
+    box-shadow: var(--drop-shadow);
 	.page-head-content {
 		height: var(--page-head-height);
 	}
 	&.drop-shadow {
 		box-shadow: var(--shadow-sm);
 		background-color: var(--fg-color) !important;
+	}
+
+	.icon-grid {
+		color: var(--primary);
+		margin-right: 16px;
 	}
 }
 
