@@ -419,7 +419,11 @@ frappe.views.Workspace = class Workspace {
 
 		this.clear_page_actions();
 
-		this.page.set_secondary_action(__("Edit"), async () => {
+		this.page.add_action_item("Create Workspace", () => {
+			this.initialize_new_page();
+		})
+
+		this.page.add_action_item("Edit", async () => {
 			if (!this.editor || !this.editor.readOnly) return;
 			this.is_read_only = false;
 			this.toggle_hidden_workspaces(true);
@@ -430,11 +434,8 @@ frappe.views.Workspace = class Workspace {
 				this.show_sidebar_actions();
 				this.make_blocks_sortable();
 			});
-		});
-
-		this.page.add_inner_button(__("Create Workspace"), () => {
-			this.initialize_new_page();
-		});
+		})
+		
 	}
 
 	initialize_editorjs_undo() {

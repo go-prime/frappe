@@ -225,6 +225,7 @@ frappe.ui.form.ControlInput = class ControlInput extends frappe.ui.form.Control 
 	}
 	set_required() {
 		this.label_area && $(this.label_area).toggleClass("reqd", Boolean(this.df.reqd));
+		this.input_area && $(this.input_area).toggleClass("reqd", Boolean(this.df.reqd));
 	}
 	set_bold() {
 		if (this.$input) {

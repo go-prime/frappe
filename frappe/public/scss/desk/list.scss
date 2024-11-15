@@ -56,26 +56,26 @@
 }
 
 .list-row-container {
-	border-bottom: 1px solid $border-color;
 	display: flex;
 	flex-direction: column;
 	outline: none;
 
 	&:focus {
-		background-color: var(--yellow-highlight-color);
+		background-color: #D3E9FC;
 	}
 }
 
 .list-row {
 	padding: 15px 15px 15px 0px;
 	height: 45px;
+	border-radius: 8px;
 	cursor: pointer;
 	transition: color 0.2s;
 	-webkit-transition: color 0.2s;
 	font-size: var(--text-md);
 
 	&:hover:not(.list-row-head) {
-		background-color: var(--highlight-color);
+		background-color: #D3E9FC;
 	}
 
 	&:last-child {
@@ -148,6 +148,9 @@
 .list-row-head {
 	@extend .list-row;
 	cursor: default;
+	color: var(--blue-400) !important;
+	box-shadow: var(--drop-shadow);
+    border-radius: 8px;
 
 	.list-subject {
 		font-weight: normal;
@@ -362,12 +365,35 @@ input.list-check-all {
 	color: $text-muted;
 }
 
+.standard-filter-section {
+	flex-direction: column;
+	background-color: white;
+	border-radius: 8px;
+	padding-bottom: 16px;
+    padding-top: 16px;
+    margin-bottom: 12px;
+	box-shadow: var(--drop-shadow);
+	.form-group {
+		min-width: 150px;
+	}
+
+	.filter-section {
+		padding-left: 16px;
+		flex-direction: column;
+		.filter-selector,
+		.sort-selector
+		 {
+			padding-bottom: 16px;	
+		}
+
+	}
+}
+
 .page-form {
 	.standard-filter-section {
 		flex-wrap: wrap;
 		// width: 65%;
 		flex: 1;
-
 		.form-group {
 			min-width: 150px;
 		}

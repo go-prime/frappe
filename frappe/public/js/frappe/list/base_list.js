@@ -567,14 +567,15 @@ frappe.views.BaseList = class BaseList {
 class FilterArea {
 	constructor(list_view) {
 		this.list_view = list_view;
-		this.list_view.page.page_form.append(`<div class="standard-filter-section flex"></div>`);
-
+		
+		this.list_view.list_sidebar.parent.prepend(`<div class="standard-filter-section flex"></div>`);
+		// this.list_view.page.page_form.append(`<div class="standard-filter-section flex"></div>`);
 		const filter_area = this.list_view.hide_page_form
 			? this.list_view.page.custom_actions
 			: this.list_view.page.page_form;
 
 		this.list_view.$filter_section = $('<div class="filter-section flex">').appendTo(
-			filter_area
+			this.list_view.list_sidebar.parent.find(".standard-filter-section") //filter_area
 		);
 
 		this.$filter_list_wrapper = this.list_view.$filter_section;
@@ -730,7 +731,7 @@ class FilterArea {
 	}
 
 	make_standard_filters() {
-		this.standard_filters_wrapper = this.list_view.page.page_form.find(
+		this.standard_filters_wrapper = this.list_view.list_sidebar.parent.find(
 			".standard-filter-section"
 		);
 		let fields = [
@@ -801,7 +802,7 @@ class FilterArea {
 					};
 				})
 		);
-
+		this.standard_filters_wrapper.append(`<h6 style="padding-left: 16px; padding-bottom: 16px;" >Standard Filters</h6>`)
 		fields.map((df) => {
 			this.list_view.page.add_field(df, this.standard_filters_wrapper);
 		});

@@ -114,6 +114,7 @@ body {
 	border-radius: var(--border-radius-md);
 	height: 100%;
 	background-color: var(--card-bg);
+	box-shadow: var(--drop-shadow);
 
 	.btn {
 		box-shadow: none;
@@ -540,15 +541,17 @@ body {
 
 	&.shortcut-widget-box {
 		cursor: pointer;
+		box-shadow: var(--drop-shadow);
 
 		&:hover {
 			.widget-title {
-				color: var(--blue-500) !important;
+				color: white !important;
 			}
 
 			svg.icon-xs {
-				stroke: var(--blue-500) !important;
+				stroke: white !important;
 			}
+			background-color: #388ae5;
 		}
 
 		.widget-title {
@@ -577,10 +580,10 @@ body {
 			cursor: pointer;
 
 			&:hover {
-				background-color: var(--fg-hover-color);
+				background-color: var(--blue-100);
 
 				.indicator-pill {
-					background-color: var(--fg-hover-color);
+					background-color: var(--blue-100);
 				}
 			}
 
@@ -972,8 +975,6 @@ body {
 	}
 
 	.layout-main-section {
-		background-color: var(--fg-color);
-		box-shadow: var(--card-shadow);
 		border-radius: var(--border-radius-lg);
 		padding: var(--padding-sm);
 	}
@@ -1299,6 +1300,8 @@ body {
 
 						&.spacer {
 							height: 18px !important;
+							background: transparent !important;
+							box-shadow: none !important;
 						}
 
 						&.ce-paragraph {
