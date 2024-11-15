@@ -3,7 +3,6 @@
 
 .std-form-layout > .form-layout > .form-page {
 	border-radius: var(--border-radius-md);
-	box-shadow: var(--card-shadow);
 	background-color: var(--card-bg);
 }
 
@@ -355,6 +354,8 @@
 }
 .form-tab-content {
 	scroll-margin-top: calc(var(--navbar-height) + 52px);
+	box-shadow: var(--card-shadow);
+
 }
 .form-tabs-sticky-up {
 	top: calc(var(--navbar-height) - 1px);

@@ -10,7 +10,8 @@
 
 .grid-heading-row {
 	border-bottom: 1px solid var(--table-border-color);
-	color: var(--text-muted);
+	color: white;
+	background-color: #007bff;
 	font-size: var(--text-md);
 
 	.grid-static-col {
@@ -18,6 +19,11 @@
 			content: ' *';
 			color: var(--red-400);
 		}
+	}
+
+	.icon {
+		stroke: white;
+		color: white;
 	}
 }
 

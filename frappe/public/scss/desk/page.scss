@@ -22,6 +22,9 @@
 				display: none;
 			}
 		}
+		i {
+			color: #007bff;
+		}
 	}
 	.title-area {
 		display: inline-flex;
@@ -91,11 +94,11 @@
 	margin-bottom: 5px;
 	margin: 16px;
 	transition: 0.5s top;
-	background: white;
-    border-radius: 8px;
-    box-shadow: var(--drop-shadow);
 	.page-head-content {
 		height: var(--page-head-height);
+		background: white;
+		border-radius: 8px;
+		box-shadow: var(--drop-shadow);
 	}
 	&.drop-shadow {
 		box-shadow: var(--shadow-sm);
@@ -106,6 +109,8 @@
 		color: var(--primary);
 		margin-right: 16px;
 	}
+
+
 }
 
 .page-form {
