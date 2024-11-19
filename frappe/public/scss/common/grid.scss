@@ -10,8 +10,14 @@
 
 .grid-heading-row {
 	border-bottom: 1px solid var(--table-border-color);
-	color: var(--text-muted);
+	color: white;
+	background-color: #007bff;
 	font-size: var(--text-md);
+
+	.icon {
+		stroke: white;
+		color: white;
+	}
 
 	.grid-static-col {
 		.static-area.reqd:after {

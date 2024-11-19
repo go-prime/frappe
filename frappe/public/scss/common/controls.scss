@@ -113,6 +113,12 @@ select.form-control {
 		content: " *";
 		color: var(--red-400);
 	}
+	.control-input.reqd {
+		input {
+			background-color: #D3E9FC !important;
+		}
+	}
+
 	.help:empty {
 		display: none;
 	}
