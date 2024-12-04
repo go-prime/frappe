@@ -387,7 +387,7 @@ def parse_naming_series(
 	series_set = False
 	today = now_datetime()
 	if "goprime" in frappe.get_all_apps():
-		from goprime.config.utils import get_features
+		from goprime.config import get_features
 		if hasattr(doc, 'doctype') and doc.doctype in ['Sales Invoice', 'Delivery Note'] and \
 				get_features().get('sync_waybills_and_invoices'):
 			attr = 'sales_order' if doc.doctype == 'Sales Invoice' else 'against_sales_order'
