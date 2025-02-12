@@ -89,7 +89,10 @@ class AutoEmailReport(Document):
 			return self.get_html_table(columns, data)
 
 		elif self.format == 'XLSX':
-			spreadsheet_data = self.get_spreadsheet_data(columns, data)
+			if self.report == "Debtors Analysis Summary":
+				spreadsheet_data = build_xlsx_data(columns, data, None, False, self.filters, self.report)
+			else:
+				spreadsheet_data = self.get_spreadsheet_data(columns, data)
 			xlsx_file = make_xlsx(spreadsheet_data, "Auto Email Report")
 			return xlsx_file.getvalue()
 
@@ -242,3 +245,38 @@ def make_links(columns, data):
 					row[col.fieldname] = get_link_to_form(row[col.options], row[col.fieldname])
 
 	return columns, data
+
+
+def build_xlsx_data(columns, data, visible_idx=None, include_indentation=False, filters=None, report_name=None):
+    result = []
+
+    if filters:
+        result.append(["Filters:"])
+        for k, v in filters.items():
+            if v or v == 0:
+                label = k.replace("_", " ").title()
+                value = ", ".join(v) if isinstance(v, (list, tuple)) else v
+                result.append([label, value])
+        result.append([])  # Add spacing after filters
+
+    # Add column headings
+    titles = [col.get("label", col.get("fieldname", "")) for col in columns]
+    result.append(titles)
+
+    # Add data rows
+    for i, row in enumerate(data):
+        if visible_idx is None or i in visible_idx:
+            row_data = []
+            if isinstance(row, dict):
+                for col in columns:
+                    fieldname = col.get("fieldname")
+                    label = col.get("label")
+                    cell_value = row.get(fieldname, row.get(label, ""))
+                    if include_indentation and row.get('indent') and columns.index(col) == 0:
+                        cell_value = ('    ' * int(row['indent'])) + str(cell_value)
+                    row_data.append(cell_value)
+            else:
+                row_data = row
+            result.append(row_data)
+
+    return result
