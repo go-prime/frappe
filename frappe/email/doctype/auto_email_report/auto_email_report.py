@@ -72,6 +72,8 @@ class AutoEmailReport(Document):
 		if self.report_type != 'Report Builder' and self.dynamic_date_filters_set():
 			self.prepare_dynamic_filters()
 
+		print(self.filters)
+
 		columns, data = report.get_data(limit=self.no_of_rows or 100, user = self.user,
 			filters = self.filters, as_dict=True, ignore_prepared_report=True)
 
@@ -153,6 +155,14 @@ class AutoEmailReport(Document):
 
 		self.filters[self.from_date_field] = from_date
 		self.filters[self.to_date_field] = to_date
+
+		date_filters = self.get('custom_date_filters', '')
+
+		if not date_filters:
+			return
+		
+		for date_filter in date_filters:
+			self.filters[date_filter] = today()
 
 	def send(self):
 		if self.filter_meta and not self.filters:

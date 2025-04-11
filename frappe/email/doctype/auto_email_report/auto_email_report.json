@@ -19,6 +19,8 @@
   "filters_display",
   "filters",
   "filter_meta",
+  "custom_date_filters_display",
+  "custom_date_filters",
   "dynamic_report_filters_section",
   "from_date_field",
   "to_date_field",
@@ -198,9 +200,20 @@
    "hidden": 1,
    "label": "Reference Report",
    "read_only": 1
+  },
+  {
+   "fieldname": "custom_date_filters_display",
+   "fieldtype": "HTML",
+   "label": "Custom Date Filters Display"
+  },
+  {
+   "fieldname": "custom_date_filters",
+   "fieldtype": "Text",
+   "hidden": 1,
+   "label": "Custom Date Filters"
   }
  ],
- "modified": "2022-05-03 05:53:41.658133",
+ "modified": "2025-03-28 13:16:11.660969",
  "modified_by": "Administrator",
  "module": "Email",
  "name": "Auto Email Report",
