@@ -72,8 +72,6 @@ class AutoEmailReport(Document):
 		if self.report_type != 'Report Builder' and self.dynamic_date_filters_set():
 			self.prepare_dynamic_filters()
 
-		print(self.filters)
-
 		columns, data = report.get_data(limit=self.no_of_rows or 100, user = self.user,
 			filters = self.filters, as_dict=True, ignore_prepared_report=True)
 
