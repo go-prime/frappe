@@ -1,6 +1,3 @@
-// Copyright (c) 2016, Frappe Technologies and contributors
-// For license information, please see license.txt
-
 frappe.ui.form.on('Auto Email Report', {
 	refresh: function(frm) {
 		if(frm.doc.report_type !== 'Report Builder') {
@@ -27,7 +24,8 @@ frappe.ui.form.on('Auto Email Report', {
 						"/api/method/frappe.email.doctype.auto_email_report.auto_email_report.download?"
 						+"name="+encodeURIComponent(frm.doc.name)));
 				if(!w) {
-					frappe.msgprint(__("Please enable pop-ups")); return;
+					frappe.msgprint(__("Please enable pop-ups"));
+					return;
 				}
 			});
 			frm.add_custom_button(__('Send Now'), function() {
@@ -52,6 +50,7 @@ frappe.ui.form.on('Auto Email Report', {
 		frm.set_value('filters', '');
 	},
 	show_filters: function(frm) {
+		// Clear and build the main filters table
 		var wrapper = $(frm.get_field('filters_display').wrapper);
 		wrapper.empty();
 		if(frm.doc.report_type === 'Custom Report' || (frm.doc.report_type !== 'Report Builder'
@@ -67,7 +66,6 @@ frappe.ui.form.on('Auto Email Report', {
 			var filters = JSON.parse(frm.doc.filters || '{}');
 
 			let report_filters;
-
 			if (frm.doc.report_type === 'Custom Report'
 				&& frappe.query_reports[frm.doc.reference_report]
 				&& frappe.query_reports[frm.doc.reference_report].filters) {
@@ -83,13 +81,13 @@ frappe.ui.form.on('Auto Email Report', {
 				}
 			}
 
-			var report_filters_list = []
+			var report_filters_list = [];
 			$.each(report_filters, function(key, val){
-				// Remove break fieldtype from the filters
+				// Remove "Break" fieldtype from the filters
 				if(val.fieldtype != 'Break') {
-					report_filters_list.push(val)
+					report_filters_list.push(val);
 				}
-			})
+			});
 			report_filters = report_filters_list;
 
 			report_filters.forEach(function(f) {
@@ -111,15 +109,44 @@ frappe.ui.form.on('Auto Email Report', {
 				});
 				dialog.show();
 				dialog.set_values(filters);
-			})
+			});
 
-			// populate dynamic date field selection
+			// Populate dynamic date field selection for from/to date fields
 			let date_fields = report_filters
 				.filter(df => df.fieldtype === 'Date')
 				.map(df => ({ label: df.label, value: df.fieldname }));
 			frm.set_df_property('from_date_field', 'options', date_fields);
 			frm.set_df_property('to_date_field', 'options', date_fields);
 			frm.toggle_display('dynamic_report_filters_section', date_fields.length > 0);
+
+			// *** New: Build the custom date filters table ***
+			// This table will be rendered in the HTML field "custom_date_filters_display"
+			// It lists each date field with a checkbox. When checked, the field's name is stored
+			// in the text field "custom_date_filters" as a comma-separated list.
+			var custom_wrapper = $(frm.get_field('custom_date_filters_display').wrapper);
+			custom_wrapper.empty();
+			if(date_fields.length > 0) {
+				var custom_table = $('<table class="table table-bordered" style="cursor:pointer; margin:0px;"><thead>\
+					<tr><th style="width: 50%">'+__('Field Name')+'</th><th>'+__('Include')+'</th></tr>\
+					</thead><tbody></tbody></table>').appendTo(custom_wrapper);
+				// Parse current custom_date_filters (assumed to be comma-separated)
+				var custom_date_filters_list = frm.doc.custom_date_filters ? frm.doc.custom_date_filters.split(',') : [];
+				date_fields.forEach(function(df) {
+					var isChecked = custom_date_filters_list.indexOf(df.value) > -1;
+					var row = $('<tr><td>' + df.label + '</td><td><input type="checkbox" data-field="'+ df.value +'" ' + (isChecked ? 'checked' : '') + '></td></tr>');
+					custom_table.find('tbody').append(row);
+				});
+				// When any checkbox is changed, update the custom_date_filters text field
+				custom_table.find('input[type="checkbox"]').on('change', function() {
+					var selected = [];
+					custom_table.find('input[type="checkbox"]').each(function() {
+						if ($(this).is(':checked')) {
+							selected.push($(this).attr('data-field'));
+						}
+					});
+					frm.set_value('custom_date_filters', selected.join(','));
+				});
+			}
 		}
 	}
 });

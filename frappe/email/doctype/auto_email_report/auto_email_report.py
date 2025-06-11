@@ -23,11 +23,11 @@ class AutoEmailReport(Document):
 		count = frappe.db.sql('''
 			select ifnull(count(name), 0) from `tabAuto Email Report`
 			where name like "{}%"
-		'''.format(_(self.report)))[0][0]
+		'''.format(_(self.naming)))[0][0]
 		suffix = ""
 		if count:
 			suffix = f"-{count}"
-		self.name = f"{_(self.report)}{suffix}"
+		self.name = f"{_(self.naming)}{suffix}"
 
 	def validate(self):
 		self.validate_report_count()
@@ -154,6 +154,14 @@ class AutoEmailReport(Document):
 		self.filters[self.from_date_field] = from_date
 		self.filters[self.to_date_field] = to_date
 
+		date_filters = self.get('custom_date_filters', '')
+
+		if not date_filters:
+			return
+		
+		for date_filter in date_filters:
+			self.filters[date_filter] = today()
+
 	def send(self):
 		if self.filter_meta and not self.filters:
 			frappe.throw(_("Please set filters value in Report Filter table."))
@@ -206,7 +214,13 @@ def send_now(name):
 	'''Send Auto Email report now'''
 	auto_email_report = frappe.get_doc('Auto Email Report', name)
 	auto_email_report.check_permission()
-	auto_email_report.send()
+	# Enqueue the send method instead of calling it directly
+	frappe.enqueue(
+		method=auto_email_report.send,
+		queue="long",
+		timeout=1200,
+		is_async=True
+	)
 
 def send_daily():
 	'''Check reports to be sent daily'''
