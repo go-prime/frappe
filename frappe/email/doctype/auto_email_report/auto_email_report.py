@@ -15,7 +15,7 @@ from frappe.utils import (format_time, get_link_to_form, get_url_to_report,
 from frappe.utils.csvutils import to_csv
 from frappe.utils.xlsxutils import make_xlsx
 
-max_reports_per_user = frappe.local.conf.max_reports_per_user or 3
+max_reports_per_user = 3
 
 
 class AutoEmailReport(Document):
