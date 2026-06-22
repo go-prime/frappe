@@ -9,6 +9,7 @@ from __future__ import unicode_literals, print_function
 from six import iteritems, binary_type, text_type, string_types
 from werkzeug.local import Local, release_local
 import os, sys, importlib, inspect, json
+from contextlib import contextmanager
 from past.builtins import cmp
 
 from faker import Faker
@@ -532,6 +533,18 @@ def read_only():
 			return retval
 		return wrapper_fn
 	return innfn
+
+@contextmanager
+def read_only_mode():
+	"""Context manager to run a block against the read replica, then restore the primary connection."""
+	if conf.read_from_replica:
+		connect_replica()
+	try:
+		yield
+	finally:
+		if local and hasattr(local, 'primary_db'):
+			local.db.close()
+			local.db = local.primary_db
 
 def only_for(roles, message=False):
 	"""Raise `frappe.PermissionError` if the user does not have any of the given **Roles**.
