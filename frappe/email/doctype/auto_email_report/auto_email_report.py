@@ -15,7 +15,7 @@ from frappe.utils import (format_time, get_link_to_form, get_url_to_report,
 from frappe.utils.csvutils import to_csv
 from frappe.utils.xlsxutils import make_xlsx
 
-max_reports_per_user = frappe.local.conf.max_reports_per_user or 3
+max_reports_per_user = 3
 
 
 class AutoEmailReport(Document):
@@ -240,7 +240,10 @@ def send_daily():
 			if auto_email_report.day_of_week != current_day:
 				continue
 
-		auto_email_report.send()
+		try:
+			auto_email_report.send()
+		except Exception as e:
+			frappe.log_error(e, _('Failed to send {0} Auto Email Report').format(auto_email_report.name))
 
 
 def send_monthly():

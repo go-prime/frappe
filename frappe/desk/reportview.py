@@ -15,7 +15,6 @@ from frappe.utils import cstr
 
 
 @frappe.whitelist()
-@frappe.read_only()
 def get():
 	def get_company():
 		perms = frappe.get_list('User Permission', filters={
@@ -296,13 +295,11 @@ def delete_bulk(doctype, items):
 			frappe.db.rollback()
 
 @frappe.whitelist()
-@frappe.read_only()
 def get_sidebar_stats(stats, doctype, filters=[]):
 
 	return {"stats": get_stats(stats, doctype, filters)}
 
 @frappe.whitelist()
-@frappe.read_only()
 def get_stats(stats, doctype, filters=[]):
 	"""get tag info"""
 	import json

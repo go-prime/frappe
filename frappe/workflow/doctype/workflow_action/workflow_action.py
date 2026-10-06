@@ -215,7 +215,7 @@ def deduplicate_actions(action_list):
 		if not action_map.get(action_data.action_name):
 			action_map[action_data.action_name] = action_data
 
-	return action_map.values()
+	return list(action_map.values())
 
 def get_workflow_action_url(action, doc, user):
 	apply_action_method = "/api/method/frappe.workflow.doctype.workflow_action.workflow_action.apply_action"

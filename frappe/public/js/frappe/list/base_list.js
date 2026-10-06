@@ -146,7 +146,6 @@ frappe.views.BaseList = class BaseList {
 	setup_page() {
 		this.page = this.parent.page;
 		this.$page = $(this.parent);
-		t
 		this.page.page_form.removeClass('row').addClass('flex');
 		
 		this.page.page_form.data('doctype', this.doctype)

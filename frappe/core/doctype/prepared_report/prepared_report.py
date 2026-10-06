@@ -41,11 +41,12 @@ def run_background(prepared_report):
 			report = frappe.get_doc("Report", reference_report)
 			report.custom_columns = custom_report_doc.json
 
-		result = generate_report_result(
-			report=report,
-			filters=instance.filters,
-			user=instance.owner
-		)
+		with frappe.read_only_mode():
+			result = generate_report_result(
+				report=report,
+				filters=instance.filters,
+				user=instance.owner
+			)
 		create_json_gz_file(result["result"], "Prepared Report", instance.name)
 
 		instance.status = "Completed"
