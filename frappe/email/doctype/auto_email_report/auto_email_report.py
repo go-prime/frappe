@@ -249,8 +249,8 @@ def send_monthly():
 		enqueue_send(report.name)
 
 def enqueue_send(name):
-	'''Send each report in its own long-queue job so a slow report
-	neither hits the short worker's timeout nor holds up the others'''
+	'''Send each report in its own long-queue job so a slow or failing
+	report only costs itself, not the rest of the batch'''
 	frappe.enqueue(
 		'frappe.email.doctype.auto_email_report.auto_email_report.send_report',
 		name=name,
