@@ -240,13 +240,27 @@ def send_daily():
 			if auto_email_report.day_of_week != current_day:
 				continue
 
-		auto_email_report.send()
+		enqueue_send(auto_email_report.name)
 
 
 def send_monthly():
 	'''Check reports to be sent monthly'''
 	for report in frappe.get_all('Auto Email Report', {'enabled': 1, 'frequency': 'Monthly'}):
-		frappe.get_doc('Auto Email Report', report.name).send()
+		enqueue_send(report.name)
+
+def enqueue_send(name):
+	'''Send each report in its own long-queue job so a slow report
+	neither hits the short worker's timeout nor holds up the others'''
+	frappe.enqueue(
+		'frappe.email.doctype.auto_email_report.auto_email_report.send_report',
+		name=name,
+		queue="long",
+		timeout=1200,
+		job_name='auto_email_report:' + name
+	)
+
+def send_report(name):
+	frappe.get_doc('Auto Email Report', name).send()
 
 def make_links(columns, data):
 	for row in data:
