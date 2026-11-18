@@ -1,0 +1,57 @@
+{
+ "custom_fields": [
+  {
+   "allow_in_quick_entry": 1,
+   "doctype": "Custom Field",
+   "dt": "Auto Email Report",
+   "fieldname": "naming",
+   "fieldtype": "Data",
+   "is_system_generated": 0,
+   "label": "Name",
+   "module": "Goprime Erp",
+   "name": "Auto Email Report-naming",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "doctype": "Custom Field",
+   "dt": "Auto Email Report",
+   "fieldname": "custom_date_filters_display",
+   "fieldtype": "HTML",
+   "insert_after": "filter_meta",
+   "is_system_generated": 0,
+   "label": "Custom Date Filters Display",
+   "module": "Goprime Erp",
+   "name": "Auto Email Report-custom_date_filters_display"
+  },
+  {
+   "doctype": "Custom Field",
+   "dt": "Auto Email Report",
+   "fieldname": "custom_date_filters",
+   "fieldtype": "Text",
+   "hidden": 1,
+   "insert_after": "custom_date_filters_display",
+   "is_system_generated": 0,
+   "label": "Custom Date Filters",
+   "module": "Goprime Erp",
+   "name": "Auto Email Report-custom_date_filters"
+  }
+ ],
+ "custom_perms": [],
+ "doctype": "Auto Email Report",
+ "links": [],
+ "property_setters": [
+  {
+   "doc_type": "Auto Email Report",
+   "doctype": "Property Setter",
+   "doctype_or_field": "DocType",
+   "is_system_generated": 0,
+   "module": "Goprime Erp",
+   "name": "Auto Email Report-main-field_order",
+   "property": "field_order",
+   "property_type": "Data",
+   "value": "[\"naming\", \"report\", \"user\", \"enabled\", \"column_break_4\", \"report_type\", \"reference_report\", \"filter_data\", \"send_if_data\", \"data_modified_till\", \"no_of_rows\", \"report_filters\", \"filters_display\", \"filters\", \"filter_meta\", \"custom_date_filters_display\", \"custom_date_filters\", \"dynamic_report_filters_section\", \"from_date_field\", \"to_date_field\", \"column_break_17\", \"dynamic_date_period\", \"use_first_day_of_period\", \"email_settings\", \"email_to\", \"day_of_week\", \"column_break_13\", \"sender\", \"frequency\", \"format\", \"section_break_15\", \"description\"]"
+  }
+ ],
+ "sync_on_migrate": 1
+}
